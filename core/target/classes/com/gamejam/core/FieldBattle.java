@@ -10,17 +10,18 @@ import playn.core.PlayN;
 import static playn.core.PlayN.*;
 //test
 public class FieldBattle implements Game {
-	
-	Board board = new Board();
+
+    Board board = new Board();
 
     @Override
     public void init() {
-        Image bgImage = assets().getImage("images/bg.png");
+
+        Image bgImage = assets().getImage("images/background.png");
         ImageLayer bgLayer = graphics().createImageLayer(bgImage);
         graphics().rootLayer().add(bgLayer);
 
         initKeyboardListener();
-        Board board = new Board();
+
 
 
 
@@ -31,20 +32,27 @@ public class FieldBattle implements Game {
 
     @Override
     public void paint(float delta) {
-    	Tile[][] tiles = board.getTiles();
-        for(int i = 0; i < 5; i++) {
-            for(int j = 0; j < 5; j++) {
-                //Image matrixImage = assets().getImage("images/images.jpeg");
-            	Image matrixImage = assets().getImage(new Content().getImage(board.getTiles()[i][j].getContent()));
-                ImageLayer matrix = graphics().createImageLayer(matrixImage);
-                graphics().rootLayer().add(matrix);
-                matrix.setTranslation(i * 100, j * 100);
-            }
-        }
     }
 
     @Override
     public void update(float delta) {
+
+
+
+        Tile[][] tiles = board.getTiles();
+        for(int i = 0; i < tiles.length; i++) {
+            for(int j = 0; j < tiles[i].length; j++) {
+
+                Image matrixImage = assets().getImage("images/feldungeklickt.png");
+                if(tiles[i][j].isCurrent()) {
+                    matrixImage = assets().getImage("images/feldgeklickt.png");
+                }
+                ImageLayer matrix = graphics().createImageLayer(matrixImage);
+                graphics().rootLayer().add(matrix);
+                matrix.setTranslation(i * 100, j * 100);
+
+            }
+        }
     }
 
     @Override
@@ -59,16 +67,16 @@ public class FieldBattle implements Game {
             public void onKeyDown(Event event) {
 
                 if(event.key() == Key.UP) {
-                    System.out.println("key up");
+                    board.updateCurser(board.getCurrentCurserX(), board.getCurrentCurserY() - 1);
                 }
                 if(event.key() == Key.DOWN) {
-                    System.out.println("key down");
+                    board.updateCurser(board.getCurrentCurserX(), board.getCurrentCurserY() + 1);
                 }
                 if(event.key() == Key.RIGHT) {
-                    System.out.println("key right");
+                    board.updateCurser(board.getCurrentCurserX() + 1, board.getCurrentCurserY());
                 }
                 if(event.key() == Key.LEFT) {
-                    System.out.println("key left");
+                    board.updateCurser(board.getCurrentCurserX() - 1, board.getCurrentCurserY());
                 }
                 if(event.key() == Key.ENTER) {
                     System.out.println("key enter");

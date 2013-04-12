@@ -11,7 +11,6 @@ public class Board {
     private Tile[][] tiles = new Tile[xSize][ySize];
     private int currentCurserX;
     private int currentCurserY;
-    private Tile[][] currentCurser = new Tile[xSize][ySize];
 
     public Board() {
         ArrayList<Content.Name> contentList = new ArrayList<Content.Name>(Arrays.asList(contents));
@@ -25,7 +24,9 @@ public class Board {
 
             }
         }
-        tiles[0][0].setVisible(true);
+        currentCurserX = 0;
+        currentCurserY = 0;
+        tiles[currentCurserX][currentCurserY].setCurrent(true);
     }
 
     public int getCurrentCurserX() {
@@ -36,10 +37,11 @@ public class Board {
         return currentCurserY;
     }
 
-    public void updateTiles(int x, int y, boolean visibility) {
+    public void updateCurser(int x, int y) {
+        tiles[currentCurserX][currentCurserY].setCurrent(false);
         currentCurserX = x;
         currentCurserY = y;
-        tiles[currentCurserX][currentCurserY].setVisible(visibility);
+        tiles[currentCurserX][currentCurserY].setCurrent(true);
     }
 
     public Tile getCurrentCurserTile() {

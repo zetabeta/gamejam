@@ -10,35 +10,35 @@ import playn.core.PlayN;
 import static playn.core.PlayN.*;
 //test
 public class FieldBattle implements Game {
-	
-	Board board = new Board();
+
+    Board board = new Board();
+    Content content = new Content();
 
     @Override
     public void init() {
-        Image bgImage = assets().getImage("images/bg.png");
+        Image bgImage = assets().getImage("images/BGWorldmap.png");
         ImageLayer bgLayer = graphics().createImageLayer(bgImage);
         graphics().rootLayer().add(bgLayer);
 
         initKeyboardListener();
-        Board board = new Board();
-
-
-
-
 
 
     }
 
     @Override
     public void paint(float delta) {
-    	Tile[][] tiles = board.getTiles();
+        Tile[][] tiles = board.getTiles();
         for(int i = 0; i < 5; i++) {
             for(int j = 0; j < 5; j++) {
-                //Image matrixImage = assets().getImage("images/images.jpeg");
-            	Image matrixImage = assets().getImage(new Content().getImage(board.getTiles()[i][j].getContent()));
+
+                Image matrixImage = assets().getImage("images/feldungeklickt.png");
+                if(tiles[i][j].isVisible()) {
+                    matrixImage = assets().getImage(content.getImage(tiles[i][j].getContent()));
+                }
                 ImageLayer matrix = graphics().createImageLayer(matrixImage);
                 graphics().rootLayer().add(matrix);
                 matrix.setTranslation(i * 100, j * 100);
+
             }
         }
     }
@@ -49,7 +49,7 @@ public class FieldBattle implements Game {
 
     @Override
     public int updateRate() {
-        return 25;
+        return 0;
     }
 
     private void initKeyboardListener() {
@@ -59,16 +59,16 @@ public class FieldBattle implements Game {
             public void onKeyDown(Event event) {
 
                 if(event.key() == Key.UP) {
-                    System.out.println("key up");
+                    board.updateTiles(board.getCurrentCurserX(), board.getCurrentCurserY() - 1, true);
                 }
                 if(event.key() == Key.DOWN) {
-                    System.out.println("key down");
+                    board.updateTiles(board.getCurrentCurserX(), board.getCurrentCurserY() + 1, true);
                 }
                 if(event.key() == Key.RIGHT) {
-                    System.out.println("key right");
+                    board.updateTiles(board.getCurrentCurserX() + 1, board.getCurrentCurserY(), true);
                 }
                 if(event.key() == Key.LEFT) {
-                    System.out.println("key left");
+                    board.updateTiles(board.getCurrentCurserX() - 1, board.getCurrentCurserY(), true);
                 }
                 if(event.key() == Key.ENTER) {
                     System.out.println("key enter");

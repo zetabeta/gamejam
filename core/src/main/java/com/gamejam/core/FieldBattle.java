@@ -12,20 +12,15 @@ import static playn.core.PlayN.*;
 public class FieldBattle implements Game {
 
     Board board = new Board();
+    Content content = new Content();
 
     @Override
     public void init() {
-
         Image bgImage = assets().getImage("images/background.png");
         ImageLayer bgLayer = graphics().createImageLayer(bgImage);
         graphics().rootLayer().add(bgLayer);
 
         initKeyboardListener();
-
-
-
-
-
 
 
     }
@@ -45,7 +40,8 @@ public class FieldBattle implements Game {
 
                 Image matrixImage = assets().getImage("images/feldungeklickt.png");
                 if(tiles[i][j].isCurrent()) {
-                    matrixImage = assets().getImage("images/feldgeklickt.png");
+//                    matrixImage = assets().getImage("images/feldgeklickt.png");
+                    matrixImage = assets().getImage(content.getImage(tiles[i][j].getContent()));
                 }
                 ImageLayer matrix = graphics().createImageLayer(matrixImage);
                 graphics().rootLayer().add(matrix);
@@ -57,7 +53,7 @@ public class FieldBattle implements Game {
 
     @Override
     public int updateRate() {
-        return 25;
+        return 0;
     }
 
     private void initKeyboardListener() {

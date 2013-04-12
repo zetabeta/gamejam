@@ -13,7 +13,8 @@ public class Content {
 		this.imgs.put(Name.TRAP, "images/trap.png");
 		this.imgs.put(Name.EMPTY, "images/empty.png");
 		this.imgs.put(Name.BATTLE, "images/battle.png");
-		this.imgs.put(Name.TREASURE, "images/treasure.png");
+		this.imgs.put(Name.TREASURE, "images/monster.png");
+		this.imgs.put(Name.PLAYER, "images/player.jpg");
 	}
 
 	public String getImage(Name name){
@@ -24,7 +25,8 @@ public class Content {
 		TRAP,
 		EMPTY,
 		BATTLE,
-		TREASURE;
+		TREASURE, 
+		PLAYER;
 	}
 
 }

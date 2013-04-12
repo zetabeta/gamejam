@@ -18,8 +18,17 @@ public class Board {
         for(int i = 0; i < xSize; i++) {
             for(int j = 0; j < ySize; j++) {
                 Tile tile = new Tile();
-                tile.setContent(contentList.get(i + 5 * j));
-                tile.setVisible(false);
+                if (i == 0 && j == 0){
+                    tile.setContent(Content.Name.PLAYER);
+                    tile.setVisible(true);
+                } else if (i==4 && j == 4) {
+                    tile.setContent(Content.Name.TREASURE);
+                    tile.setVisible(true);
+                } else {
+                    tile.setContent(contentList.get(i + 5 * j));
+                    tile.setVisible(false);
+                }
+
                 tiles[i][j] = tile;
 
             }
@@ -82,4 +91,5 @@ public class Board {
     public Tile[][] getTiles() {
         return this.tiles;
     }
+
 }

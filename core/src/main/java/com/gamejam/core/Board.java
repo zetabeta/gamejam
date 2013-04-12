@@ -8,7 +8,6 @@ public class Board {
 
     private int xSize = 5;
     private int ySize = 5;
-    Content.Name[] contents = new Content.Name[]{Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY};
     private Tile[][] tiles = new Tile[xSize][ySize];
     private int currentCurserX;
     private int currentCurserY;
@@ -22,8 +21,6 @@ public class Board {
                 Tile tile = new Tile();
                 tile.setContent(contentList.get(i + 5 * j));
                 tile.setVisible(false);
-                tile.setX(i);
-                tile.setY(j);
                 tiles[i][j] = tile;
 
             }
@@ -39,5 +36,40 @@ public class Board {
 
     public Tile getCurrentCurserTile() {
         return tiles[currentCurserX][currentCurserY];
+    }
+    Content.Name[] contents = new Content.Name[]{
+        Content.Name.MONSTER,
+        Content.Name.EMPTY,
+        Content.Name.MONSTER,
+        Content.Name.EMPTY,
+        Content.Name.EMPTY,
+        Content.Name.EMPTY,
+        Content.Name.EMPTY,
+        Content.Name.EMPTY,
+        Content.Name.MONSTER,
+        Content.Name.EMPTY,
+        Content.Name.EMPTY,
+        Content.Name.EMPTY,
+        Content.Name.EMPTY,
+        Content.Name.EMPTY,
+        Content.Name.EMPTY,
+        Content.Name.MONSTER,
+        Content.Name.EMPTY,
+        Content.Name.MONSTER,
+        Content.Name.EMPTY,
+        Content.Name.EMPTY,
+        Content.Name.MONSTER,
+        Content.Name.EMPTY,
+        Content.Name.EMPTY,
+        Content.Name.MONSTER,
+        Content.Name.EMPTY,
+        Content.Name.EMPTY,
+        Content.Name.MONSTER,
+        Content.Name.EMPTY,
+        Content.Name.EMPTY,
+        Content.Name.EMPTY};
+
+    public Tile[][] getTiles() {
+        return this.tiles;
     }
 }

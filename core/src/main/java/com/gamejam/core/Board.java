@@ -52,8 +52,6 @@ public class Board {
 				Tile tile = new Tile();
 				tile.setContent(contentList.get(i*5 + j));
 				tile.setVisible(false);
-				tile.setX(i);
-				tile.setY(j);
 				tiles[i][j] = tile;
 			}
 		}

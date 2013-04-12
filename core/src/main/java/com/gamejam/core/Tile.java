@@ -4,6 +4,15 @@ public class Tile {
 
     private Content.Name content;
     private boolean visible;
+    private boolean current;
+
+    public boolean isCurrent() {
+        return current;
+    }
+
+    public void setCurrent(boolean current) {
+        this.current = current;
+    }
 
     public Content.Name getContent() {
         return content;

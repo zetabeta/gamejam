@@ -25,7 +25,15 @@ public class Board {
 
             }
         }
-        currentCurser[0][0].setVisible(true);
+        tiles[0][0].setVisible(true);
+    }
+
+    public int getCurrentCurserX() {
+        return currentCurserX;
+    }
+
+    public int getCurrentCurserY() {
+        return currentCurserY;
     }
 
     public void updateTiles(int x, int y, boolean visibility) {

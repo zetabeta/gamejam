@@ -2,6 +2,8 @@ package com.gamejam.core;
 
 import static playn.core.PlayN.assets;
 import static playn.core.PlayN.graphics;
+import playn.core.Canvas;
+import playn.core.CanvasImage;
 import playn.core.Game;
 import playn.core.GroupLayer;
 import playn.core.Image;
@@ -22,6 +24,12 @@ public class FieldBattle implements Game {
     GroupLayer group;
     int offset = 80;
     GroupLayer subgroup;
+    CanvasImage textCanvas;
+    ImageLayer textImageLayer;
+
+    String[] texts = new String[] { "hello folks! watta beautiful day, isn't it?  Y or N?", "frage2", "frage3", "puzzle4", "penis",
+            "wurst", "salamipizza!", "hotdog", "ice cream!" };
+    int txtIdx = 0;
 
     // Layer comixBubble;
 
@@ -73,11 +81,22 @@ public class FieldBattle implements Game {
         group.add(layer3);
         layer3.setTranslation(50, 20);
         layer3.setVisible(false);
-        // comixBubble = createMessageText("hhohohohoho!!!", 24, 122);
-        // group.add(comixBubble);
-        // comixBubble.setVisible(false);
+        textCanvas = graphics().createImage(350, 350);
+        //
+
+        //
 
         initKeyboardListener();
+    }
+
+    private void displayText(String text) {
+
+        Canvas canvas = textCanvas.canvas();
+        canvas.drawText(text, 200, 40);
+        textImageLayer = graphics().createImageLayer(textCanvas);
+        textImageLayer.setTranslation(70, 20);
+        group.add(textImageLayer);
+        // textImageLayer.setVisible(false);
     }
 
     @Override
@@ -124,8 +143,8 @@ public class FieldBattle implements Game {
 
         if (board.eventOccurred) {
             layer3.setVisible(true);
-            // layer3.setDepth(100);
-            // comixBubble.setVisible(true);
+            displayText(this.texts[this.txtIdx]);
+            txtIdx++;
             board.eventOccurred = false;
         }
 
@@ -145,28 +164,28 @@ public class FieldBattle implements Game {
                 if (event.key() == Key.UP) {
                     if (layer3.visible()) {
                         layer3.setVisible(false);
-                        // comixBubble.setVisible(false);
+                        textImageLayer.setVisible(false);
                     }
                     board.moveUp();
                 }
                 if (event.key() == Key.DOWN) {
                     if (layer3.visible()) {
                         layer3.setVisible(false);
-                        // comixBubble.setVisible(false);
+                        textImageLayer.setVisible(false);
                     }
                     board.moveDown();
                 }
                 if (event.key() == Key.RIGHT) {
                     if (layer3.visible()) {
                         layer3.setVisible(false);
-                        // comixBubble.setVisible(false);
+                        textImageLayer.setVisible(false);
                     }
                     board.moveRight();
                 }
                 if (event.key() == Key.LEFT) {
                     if (layer3.visible()) {
                         layer3.setVisible(false);
-                        // comixBubble.setVisible(false);
+                        textImageLayer.setVisible(false);
                     }
                     board.moveLeft();
                 }

@@ -163,4 +163,9 @@ public class Board {
         System.out.println("block x: " + newX + " y: " + newY);
         tiles[newX][newY].setBlocked(true);
     }
+
+    public void handeTrap() {
+        blockTile(getCurrentCurserX(), getCurrentCurserY());
+        updateCursor(getLastX(), getLastY());
+    }
 }

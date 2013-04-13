@@ -292,51 +292,7 @@ public class FieldBattle implements Game {
                     }
                 }
 
-                if(event.key() == Key.UP) {
-                    if(layer3.visible()) {
-                        layer3.setVisible(false);
-                        textImageLayer.setVisible(false);
-                    }
-                    if(layerBodo.visible()) {
-                        layerBodo.setVisible(false);
-                        textImageLayer.setVisible(false);
-                    }
-                    board.moveUp();
-                }
-                if(event.key() == Key.DOWN) {
-                    if(layer3.visible()) {
-                        layer3.setVisible(false);
-                        textImageLayer.setVisible(false);
-                    }
-                    if(layerBodo.visible()) {
-                        layerBodo.setVisible(false);
-                        textImageLayer.setVisible(false);
-                    }
-                    board.moveDown();
-                }
-                if(event.key() == Key.RIGHT) {
-                    if(layer3.visible()) {
-                        layer3.setVisible(false);
-                        textImageLayer.setVisible(false);
-                    }
-                    if(layerBodo.visible()) {
-                        layerBodo.setVisible(false);
-                        textImageLayer.setVisible(false);
-                    }
-                    board.moveRight();
 
-                }
-                if(event.key() == Key.LEFT) {
-                    if(layer3.visible()) {
-                        layer3.setVisible(false);
-                        textImageLayer.setVisible(false);
-                    }
-                    if(layerBodo.visible()) {
-                        layerBodo.setVisible(false);
-                        textImageLayer.setVisible(false);
-                    }
-                    board.moveLeft();
-                }
 
                 if(event.key() == Key.ENTER) {
                     if(tmpEventTrap) {

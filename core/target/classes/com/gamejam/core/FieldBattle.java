@@ -21,6 +21,7 @@ public class FieldBattle implements Game {
     ImageLayer focusBackgroundLayer;
     ImageLayer layer2;
     ImageLayer layer3;
+    ImageLayer layerTrap;
     ImageLayer unicorn;
     GroupLayer group;
     GroupLayer unicornGroup;
@@ -31,7 +32,8 @@ public class FieldBattle implements Game {
     String[] texts = new String[] { "hello folks! watta \n beautiful day, isn't it?  Y or N?", "frage2", "frage3", "puzzle4", "penis",
             "wurst", "salamipizza!", "hotdog", "ice cream!" };
     int txtIdx = 0;
-    boolean tmpEvent = false;
+    boolean tmpEventQuestion = false;
+    boolean tmpEventTrap = false;
 
     // Layer comixBubble;
     @Override
@@ -77,11 +79,18 @@ public class FieldBattle implements Game {
             }
         }
 
-        Image image = assets().getImage("images/popupHERO.png");
-        layer3 = graphics().createImageLayer(image);
+        Image heroImage = assets().getImage("images/popupHERO.png");
+        layer3 = graphics().createImageLayer(heroImage);
         group.add(layer3);
         layer3.setTranslation(50, 20);
         layer3.setVisible(false);
+        textCanvas = graphics().createImage(500, 500);
+
+        Image trapImage = assets().getImage("images/popupTRAP.png");
+        layerTrap = graphics().createImageLayer(trapImage);
+        group.add(layerTrap);
+        layerTrap.setTranslation(50, 20);
+        layerTrap.setVisible(false);
         textCanvas = graphics().createImage(500, 500);
 
         initKeyboardListener();
@@ -146,15 +155,19 @@ public class FieldBattle implements Game {
         }
 
         if (board.eventOccurred) {
-            if (board.currentEventType.equals(Content.Name.ENEMY)) {
-                board.blockTile(board.getCurrentCurserX(), board.getCurrentCurserY());
-                board.updateCursor(board.getLastX(), board.getLastY());
-            } else {
+            if (board.currentEventType == Content.Name.FRAGE) {
                 layer3.setVisible(true);
                 displayText(this.texts[this.txtIdx]);
                 txtIdx++;
+                tmpEventQuestion = true;
+
+            } else if (board.currentEventType == Content.Name.TRAP) {
+                layerTrap.setVisible(true);
+
+            } else if (board.currentEventType.equals(Content.Name.ENEMY)) {
+                board.blockTile(board.getCurrentCurserX(), board.getCurrentCurserY());
+                board.updateCursor(board.getLastX(), board.getLastY());
             }
-            tmpEvent = true;
             board.eventOccurred = false;
         }
 
@@ -172,9 +185,10 @@ public class FieldBattle implements Game {
             public void onKeyDown(Event event) {
 
                 if (event.key() == Key.Y) {
-                    if (tmpEvent) {
-                        tmpEvent = false;
+                    if (tmpEventQuestion) {
+                        tmpEventQuestion = false;
                         if (layer3.visible()) {
+
                             layer3.setVisible(false);
                             textImageLayer.setVisible(false);
                         }
@@ -184,8 +198,8 @@ public class FieldBattle implements Game {
                 }
 
                 if (event.key() == Key.N) {
-                    if (tmpEvent) {
-                        tmpEvent = false;
+                    if (tmpEventQuestion) {
+                        tmpEventQuestion = false;
                         if (layer3.visible()) {
                             layer3.setVisible(false);
                             textImageLayer.setVisible(false);
@@ -222,9 +236,15 @@ public class FieldBattle implements Game {
                     }
                     board.moveLeft();
                 }
+
                 if (event.key() == Key.ENTER) {
-                    System.out.println("key enter");
-                    System.out.println("board.eventOccurred " + board.eventOccurred);
+                    if (tmpEventTrap) {
+                        if (layerTrap.visible()) {
+                            layerTrap.setVisible(false);
+                        }
+                        board.handeTrap();
+                    }
+
                 }
 
             }

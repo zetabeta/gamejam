@@ -76,10 +76,10 @@ public class Board {
     }
 
     Content.Name[] contents = new Content.Name[] { Content.Name.BODO, Content.Name.EMPTY, Content.Name.CLOSED, Content.Name.EMPTY,
-            Content.Name.FRAGE, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.BODO, Content.Name.TRAP,
-            Content.Name.FRAGE, Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.BODO,
-            Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY, Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY,
-            Content.Name.EMPTY, Content.Name.BODO, Content.Name.CLOSED };
+            Content.Name.FRAGE, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.ENEMY, Content.Name.ENEMY, Content.Name.TRAP,
+            Content.Name.ENEMY, Content.Name.TRAP, Content.Name.ENEMY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.BODO,
+            Content.Name.TRAP, Content.Name.ENEMY, Content.Name.ENEMY, Content.Name.ENEMY, Content.Name.BODO, Content.Name.EMPTY,
+            Content.Name.EMPTY, Content.Name.ENEMY, Content.Name.ENEMY };
 
     public Tile[][] getTiles() {
         return this.tiles;

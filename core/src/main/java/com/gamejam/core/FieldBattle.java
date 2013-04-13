@@ -27,14 +27,15 @@ public class FieldBattle implements Game {
     ImageLayer questionLayer;
     ImageLayer layerTrap;
     ImageLayer layerBodo;
+    ImageLayer layerWin;
+    ImageLayer layerLose;
     ImageLayer fightLayer;
     CanvasImage textBodo;
     ImageLayer unicorn;
-
     GroupLayer boardGroup;
     GroupLayer unicornGroup;
     GroupLayer chatGroup;
-
+    GroupLayer outcomeGroup;
     int offset = 80;
     GroupLayer subgroup;
     CanvasImage textCanvas;
@@ -112,6 +113,9 @@ public class FieldBattle implements Game {
         chatGroup = graphics().createGroupLayer();
         graphics().rootLayer().add(chatGroup);
 
+        outcomeGroup = graphics().createGroupLayer();
+        graphics().rootLayer().add(outcomeGroup);
+
         Image heroImage = assets().getImage("images/popupHERO.png");
         questionLayer = graphics().createImageLayer(heroImage);
         chatGroup.add(questionLayer);
@@ -137,6 +141,18 @@ public class FieldBattle implements Game {
         chatGroup.add(fightLayer);
         fightLayer.setTranslation(30, 20);
         fightLayer.setVisible(false);
+
+        Image winImage = assets().getImage("images/popupVICTORY.png");
+        layerWin = graphics().createImageLayer(winImage);
+        outcomeGroup.add(layerWin);
+        layerWin.setTranslation(50, 20);
+        layerWin.setVisible(false);
+
+        Image loseImage = assets().getImage("images/gameover.png");
+        layerLose = graphics().createImageLayer(loseImage);
+        outcomeGroup.add(layerLose);
+        layerLose.setTranslation(50, 20);
+        layerLose.setVisible(false);
 
         initKeyboardListener();
 
@@ -175,6 +191,15 @@ public class FieldBattle implements Game {
                 int translationI = offset + i * 100;
                 int translationJ = j * 100;
 
+                if (4 == board.getCurrentCurserX() && 4 == board.getCurrentCurserY()) {
+                    layerWin.setVisible(true);
+                }
+
+                // if(board.isGameover(board.getCurrentCurserX(),
+                // board.getCurrentCurserY())) {
+                // layerLose.setVisible(true);
+                // }
+
                 if (i == board.getCurrentCurserX() && j == board.getCurrentCurserY()) {
                     if (tiles[i][j].hasChanged()) {
                         unicornGroup.setTranslation(translationI, translationJ);
@@ -188,9 +213,7 @@ public class FieldBattle implements Game {
                             tilesLayer = graphics().createImageLayer(image);
                             subgroup.add(tilesLayer);
                             tilesLayer.setTranslation(translationI, translationJ);
-                        }
-
-                        else if (tiles[i][j].isVisible()) {
+                        } else if (tiles[i][j].isVisible()) {
                             String img = content.getImage(tiles[i][j].getContent());
                             image = assets().getImage(img);
                         } else {

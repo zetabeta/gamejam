@@ -34,8 +34,19 @@ public class FieldBattle implements Game {
     GroupLayer subgroup;
     CanvasImage textCanvas;
     ImageLayer textImageLayer;
+
     String[] texts = new String[] { "hello folks! watta \n beautiful day, isn't it?  Y or N?", "frage2", "frage3", "puzzle4", "penis",
             "wurst", "salamipizza!", "hotdog", "ice cream!" };
+    String[] bodosTexte = new String[] {
+            "Gnak, gnak, gnak \n Schau mal hinter dich, ein dreikoepfiger Affe!",
+            "Wusstest du, dass das kleine Licht im Kuehlschrank \n mehr Strom verbraucht, als unser Gehirn?",
+            "Im Hirnstamm ist manchmal so viel los, dass Maenner beim Orgasmus \n niesen muessen… das kann dir ja nun nicht passieren..",
+            "Unser Gehirn verbraucht nur 12 Watt, also pro Tag die Energie zweier großer Bananen. \n Wie habt ihr das denn damals im Osten gemacht?",
+            "Im Uebringen: Die Insel, die du dir am Anfang erschaffen hast, heißt „N‘Ropinu“ und \n ist weit über die Grenzen deines matschigen \n Gehirns "
+                    + "bekannt… denk mal drueber nach!",
+            "Wenn man die gesamten „Nervenbahnen“ des Gehirns aneinander reihen wuerde, kaeme man auf eine Laenge von \nknapp 100 Kilometern. Wahnsinn… "
+                    + "Wollen wir deine Nervenbahnen auf der Autobahn suchen gehen?" };
+
     int txtIdx = 0;
     boolean tmpEventQuestion = false;
     boolean tmpEventTrap = false;
@@ -173,12 +184,16 @@ public class FieldBattle implements Game {
                 displayText(this.texts[this.txtIdx]);
                 txtIdx++;
                 tmpEventQuestion = true;
+
+            } else if (board.currentEventType == Content.Name.TRAP) {
+                layerTrap.setVisible(true);
+                tmpEventTrap = true;
             } else if (board.currentEventType == Content.Name.TRAP) {
                 layerTrap.setVisible(true);
                 tmpEventTrap = true;
             } else if (board.currentEventType == Content.Name.BODO) {
                 layerBodo.setVisible(true);
-                displayText(this.texts[this.txtIdx]);
+                displayText(this.bodosTexte[this.txtIdx]);
                 txtIdx++;
                 tmpEventBodo = true;
             } else if (board.currentEventType.equals(Content.Name.ENEMY)) {
@@ -209,7 +224,6 @@ public class FieldBattle implements Game {
                     if (tmpEventQuestion) {
                         tmpEventQuestion = false;
                         if (layer3.visible()) {
-
                             layer3.setVisible(false);
                             textImageLayer.setVisible(false);
                         }
@@ -234,11 +248,19 @@ public class FieldBattle implements Game {
                         layer3.setVisible(false);
                         textImageLayer.setVisible(false);
                     }
+                    if (layerBodo.visible()) {
+                        layerBodo.setVisible(false);
+                        textImageLayer.setVisible(false);
+                    }
                     board.moveUp();
                 }
                 if (event.key() == Key.DOWN) {
                     if (layer3.visible()) {
                         layer3.setVisible(false);
+                        textImageLayer.setVisible(false);
+                    }
+                    if (layerBodo.visible()) {
+                        layerBodo.setVisible(false);
                         textImageLayer.setVisible(false);
                     }
                     board.moveDown();
@@ -248,11 +270,20 @@ public class FieldBattle implements Game {
                         layer3.setVisible(false);
                         textImageLayer.setVisible(false);
                     }
+                    if (layerBodo.visible()) {
+                        layerBodo.setVisible(false);
+                        textImageLayer.setVisible(false);
+                    }
                     board.moveRight();
+
                 }
                 if (event.key() == Key.LEFT) {
                     if (layer3.visible()) {
                         layer3.setVisible(false);
+                        textImageLayer.setVisible(false);
+                    }
+                    if (layerBodo.visible()) {
+                        layerBodo.setVisible(false);
                         textImageLayer.setVisible(false);
                     }
                     board.moveLeft();
@@ -267,7 +298,8 @@ public class FieldBattle implements Game {
                     }
                     if (tmpEventBodo) {
                         if (layerBodo.visible()) {
-                            layerBodo.setVisible(false);
+                            textImageLayer.setVisible(false);
+
                         }
                     }
 

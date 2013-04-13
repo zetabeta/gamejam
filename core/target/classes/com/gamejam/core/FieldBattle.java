@@ -149,20 +149,17 @@ public class FieldBattle implements Game {
 
                 if (i == board.getCurrentCurserX() && j == board.getCurrentCurserY()) {
                     if (tiles[i][j].hasChanged()) {
-                        System.out.println("first");
                         unicornGroup.setTranslation(translationI, translationJ);
                     }
                 } else {
                     Image image;
                     if (tiles[i][j].isBlocked()) {
-                        System.out.println("second");
                         image = assets().getImage("images/felderLOCKED.png");
                         layer2 = graphics().createImageLayer(image);
                         subgroup.add(layer2);
                         layer2.setTranslation(translationI, translationJ);
                     }
                     if (tiles[i][j].hasChanged()) {
-                        System.out.println("third");
                         if (tiles[i][j].isVisible()) {
                             String img = content.getImage(tiles[i][j].getContent());
                             image = assets().getImage(img);
@@ -219,82 +216,86 @@ public class FieldBattle implements Game {
         PlayN.keyboard().setListener(new Keyboard.Adapter() {
             @Override
             public void onKeyDown(Event event) {
+                if (!tmpEventTrap) {
+                    if (event.key() == Key.Y) {
+                        if (tmpEventQuestion) {
+                            tmpEventQuestion = false;
+                            if (layer3.visible()) {
+                                layer3.setVisible(false);
+                                textImageLayer.setVisible(false);
+                            }
+                            board.handleAnswer(true);
+                        }
 
-                if (event.key() == Key.Y) {
-                    if (tmpEventQuestion) {
-                        tmpEventQuestion = false;
+                    }
+
+                    if (event.key() == Key.N) {
+                        if (tmpEventQuestion) {
+                            tmpEventQuestion = false;
+                            if (layer3.visible()) {
+                                layer3.setVisible(false);
+                                textImageLayer.setVisible(false);
+                            }
+                            board.handleAnswer(false);
+                        }
+                    }
+
+                    if (event.key() == Key.UP) {
                         if (layer3.visible()) {
                             layer3.setVisible(false);
                             textImageLayer.setVisible(false);
                         }
-                        board.handleAnswer(true);
+                        if (layerBodo.visible()) {
+                            layerBodo.setVisible(false);
+                            textImageLayer.setVisible(false);
+                        }
+                        board.moveUp();
                     }
+                    if (event.key() == Key.DOWN) {
 
-                }
-
-                if (event.key() == Key.N) {
-                    if (tmpEventQuestion) {
-                        tmpEventQuestion = false;
                         if (layer3.visible()) {
                             layer3.setVisible(false);
                             textImageLayer.setVisible(false);
                         }
-                        board.handleAnswer(false);
-                    }
-                }
+                        if (layerBodo.visible()) {
+                            layerBodo.setVisible(false);
+                            textImageLayer.setVisible(false);
+                        }
+                        board.moveDown();
 
-                if (event.key() == Key.UP) {
-                    if (layer3.visible()) {
-                        layer3.setVisible(false);
-                        textImageLayer.setVisible(false);
                     }
-                    if (layerBodo.visible()) {
-                        layerBodo.setVisible(false);
-                        textImageLayer.setVisible(false);
-                    }
-                    board.moveUp();
-                }
-                if (event.key() == Key.DOWN) {
-                    if (layer3.visible()) {
-                        layer3.setVisible(false);
-                        textImageLayer.setVisible(false);
-                    }
-                    if (layerBodo.visible()) {
-                        layerBodo.setVisible(false);
-                        textImageLayer.setVisible(false);
-                    }
-                    board.moveDown();
-                }
-                if (event.key() == Key.RIGHT) {
-                    if (layer3.visible()) {
-                        layer3.setVisible(false);
-                        textImageLayer.setVisible(false);
-                    }
-                    if (layerBodo.visible()) {
-                        layerBodo.setVisible(false);
-                        textImageLayer.setVisible(false);
-                    }
-                    board.moveRight();
+                    if (event.key() == Key.RIGHT) {
 
-                }
-                if (event.key() == Key.LEFT) {
-                    if (layer3.visible()) {
-                        layer3.setVisible(false);
-                        textImageLayer.setVisible(false);
+                        if (layer3.visible()) {
+                            layer3.setVisible(false);
+                            textImageLayer.setVisible(false);
+                        }
+                        if (layerBodo.visible()) {
+                            layerBodo.setVisible(false);
+                            textImageLayer.setVisible(false);
+                        }
+                        board.moveRight();
+
                     }
-                    if (layerBodo.visible()) {
-                        layerBodo.setVisible(false);
-                        textImageLayer.setVisible(false);
+                    if (event.key() == Key.LEFT) {
+                        if (layer3.visible()) {
+                            layer3.setVisible(false);
+                            textImageLayer.setVisible(false);
+                        }
+                        if (layerBodo.visible()) {
+                            layerBodo.setVisible(false);
+                            textImageLayer.setVisible(false);
+                        }
+                        board.moveLeft();
                     }
-                    board.moveLeft();
                 }
 
                 if (event.key() == Key.ENTER) {
                     if (tmpEventTrap) {
                         if (layerTrap.visible()) {
                             layerTrap.setVisible(false);
+                            board.handeTrap();
                         }
-                        board.handeTrap();
                     }
                     if (tmpEventBodo) {
                         if (layerBodo.visible()) {
@@ -302,6 +303,7 @@ public class FieldBattle implements Game {
 
                         }
                     }
+                    tmpEventTrap = false;
 
                 }
 

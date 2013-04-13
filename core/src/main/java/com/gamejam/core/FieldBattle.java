@@ -1,10 +1,6 @@
 package com.gamejam.core;
 
-import static playn.core.PlayN.assets;
-import static playn.core.PlayN.graphics;
-
 import java.util.Random;
-
 import playn.core.Canvas;
 import playn.core.CanvasImage;
 import playn.core.Game;
@@ -15,6 +11,8 @@ import playn.core.Key;
 import playn.core.Keyboard;
 import playn.core.Keyboard.Event;
 import playn.core.PlayN;
+import static playn.core.PlayN.assets;
+import static playn.core.PlayN.graphics;
 
 //test
 public class FieldBattle implements Game {
@@ -25,35 +23,34 @@ public class FieldBattle implements Game {
     ImageLayer questionLayer;
     ImageLayer layerTrap;
     ImageLayer layerBodo;
+    ImageLayer layerWin;
+    ImageLayer layerLose;
     ImageLayer fightLayer;
     CanvasImage textBodo;
     ImageLayer unicorn;
-
     GroupLayer boardGroup;
     GroupLayer unicornGroup;
     GroupLayer chatGroup;
-
+    GroupLayer outcomeGroup;
     int offset = 80;
     GroupLayer subgroup;
     CanvasImage textCanvas;
     ImageLayer textImageLayer;
-
-    String[] texts = new String[] { "Welcher Sinn hat keinen Sinn?\n[J] Unsinn\n[N] Der Sinn des Lebens",
-            "Welcher Planet wird Abendstern \ngenannt?\n[J] Venus\n[N] Mars",
-            "Was verbraucht mehr Strom?\n[J] Das kleine Licht in meinem " + "Kühlschrank!\n[N] Dein Hirn.",
-            "Wer muss manchmal beim Orgasmus \nniesen, weil der Hirnstamm \n„durcheinander“ ist?\n[J] Männer…\n[N] Frauen!",
-            "Welche/r Leiter nützt der \nFeuerwehr nicht?\n[J] Tonleiter \n[N] Wehrleiter",
-            "Wer war der Erfinder der Glühbirne?\n[J] Unbekannt\n[N] Thomas Alva Edison",
-            "Was steht mitten in Paris?\n[J] Das „r“\n[N] Der Eiffelturm!" };
-    String[] bodosTexte = new String[] {
-            "Gnak, gnak, gnak \nSchau mal hinter dich, \nein dreikoepfiger Affe!",
-            "Wusstest du, dass das kleine \nLicht im Kuehlschrank mehr Strom \nverbraucht, als unser Gehirn?",
-            "Im Hirnstamm ist manchmal so \nviel los, dass Maenner beim Orgasmus \nniesen muessen… \ndas kann dir ja nun nicht passieren..",
-            "Unser Gehirn verbraucht nur 12 Watt, \nalso pro Tag die Energie zweier großer \nBananen. Wie habt ihr das denn damals \nim Osten gemacht?",
-            "Im Uebringen: Die Insel, die du dir am \nAnfang erschaffen hast, heißt \n„N‘Ropinu“ und ist weit über die Grenzen \ndeines matschigen Gehirns "
-                    + "bekannt… \ndenk mal drueber nach!",
-            "Wenn man die gesamten \n„Nervenbahnen“ des Gehirns \naneinander reihen wuerde, \nkaeme man auf eine Laenge von \nknapp 100 Kilometern. \nWahnsinn… " };
-
+    String[] texts = new String[]{"Welcher Sinn hat keinen Sinn?\n[J] Unsinn\n[N] Der Sinn des Lebens",
+        "Welcher Planet wird Abendstern \ngenannt?\n[J] Venus\n[N] Mars",
+        "Was verbraucht mehr Strom?\n[J] Das kleine Licht in meinem " + "Kühlschrank!\n[N] Dein Hirn.",
+        "Wer muss manchmal beim Orgasmus \nniesen, weil der Hirnstamm \n„durcheinander“ ist?\n[J] Männer…\n[N] Frauen!",
+        "Welche/r Leiter nützt der \nFeuerwehr nicht?\n[J] Tonleiter \n[N] Wehrleiter",
+        "Wer war der Erfinder der Glühbirne?\n[J] Unbekannt\n[N] Thomas Alva Edison",
+        "Was steht mitten in Paris?\n[J] Das „r“\n[N] Der Eiffelturm!"};
+    String[] bodosTexte = new String[]{
+        "Gnak, gnak, gnak \nSchau mal hinter dich, \nein dreikoepfiger Affe!",
+        "Wusstest du, dass das kleine \nLicht im Kuehlschrank mehr Strom \nverbraucht, als unser Gehirn?",
+        "Im Hirnstamm ist manchmal so \nviel los, dass Maenner beim Orgasmus \nniesen muessen… \ndas kann dir ja nun nicht passieren..",
+        "Unser Gehirn verbraucht nur 12 Watt, \nalso pro Tag die Energie zweier großer \nBananen. Wie habt ihr das denn damals \nim Osten gemacht?",
+        "Im Uebringen: Die Insel, die du dir am \nAnfang erschaffen hast, heißt \n„N‘Ropinu“ und ist weit über die Grenzen \ndeines matschigen Gehirns "
+        + "bekannt… \ndenk mal drueber nach!",
+        "Wenn man die gesamten \n„Nervenbahnen“ des Gehirns \naneinander reihen wuerde, \nkaeme man auf eine Laenge von \nknapp 100 Kilometern. \nWahnsinn… "};
     int txtIdx = 0;
     boolean tmpEventQuestion = false;
     boolean tmpEventTrap = false;
@@ -77,14 +74,14 @@ public class FieldBattle implements Game {
         graphics().rootLayer().add(unicornGroup);
         // //
         Tile[][] tiles = board.getTiles();
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
+        for(int i = 0; i < tiles.length; i++) {
+            for(int j = 0; j < tiles[i].length; j++) {
 
                 int translationI = offset + i * 100;
                 int translationJ = j * 100;
 
-                if (i == board.getCurrentCurserX() && j == board.getCurrentCurserY()) {
-                    if (tiles[i][j].hasChanged()) {
+                if(i == board.getCurrentCurserX() && j == board.getCurrentCurserY()) {
+                    if(tiles[i][j].hasChanged()) {
                         Image focused = assets().getImage("images/feldHERO.png");
                         unicorn = graphics().createImageLayer(focused);
                         unicornGroup.add(unicorn);
@@ -92,8 +89,8 @@ public class FieldBattle implements Game {
                     }
                 } else {
                     Image image;
-                    if (tiles[i][j].hasChanged()) {
-                        if (tiles[i][j].isVisible()) {
+                    if(tiles[i][j].hasChanged()) {
+                        if(tiles[i][j].isVisible()) {
                             String img = content.getImage(tiles[i][j].getContent());
                             image = assets().getImage(img);
                         } else {
@@ -109,6 +106,9 @@ public class FieldBattle implements Game {
 
         chatGroup = graphics().createGroupLayer();
         graphics().rootLayer().add(chatGroup);
+
+        outcomeGroup = graphics().createGroupLayer();
+        graphics().rootLayer().add(outcomeGroup);
 
         Image heroImage = assets().getImage("images/popupHERO.png");
         questionLayer = graphics().createImageLayer(heroImage);
@@ -136,6 +136,18 @@ public class FieldBattle implements Game {
         fightLayer.setTranslation(50, 20);
         fightLayer.setVisible(false);
 
+        Image winImage = assets().getImage("images/popupVICTORY.png");
+        layerWin = graphics().createImageLayer(winImage);
+        outcomeGroup.add(layerWin);
+        layerWin.setTranslation(50, 20);
+        layerWin.setVisible(false);
+
+        Image loseImage = assets().getImage("images/gameover.png");
+        layerLose = graphics().createImageLayer(loseImage);
+        outcomeGroup.add(layerLose);
+        layerLose.setTranslation(50, 20);
+        layerLose.setVisible(false);
+
         initKeyboardListener();
     }
 
@@ -144,7 +156,7 @@ public class FieldBattle implements Game {
         Canvas canvas = textCanvas.canvas();
         String[] lines = text.split("\n");
 
-        for (int i = 0; i < lines.length; ++i) {
+        for(int i = 0; i < lines.length; ++i) {
             canvas.drawText(lines[i], 200, 10 * 2 * (i + 1));
         }
         textImageLayer = graphics().createImageLayer(textCanvas);
@@ -161,28 +173,34 @@ public class FieldBattle implements Game {
     public void update(float delta) {
 
         Tile[][] tiles = board.getTiles();
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
+        for(int i = 0; i < tiles.length; i++) {
+            for(int j = 0; j < tiles[i].length; j++) {
 
                 int translationI = offset + i * 100;
                 int translationJ = j * 100;
 
-                if (i == board.getCurrentCurserX() && j == board.getCurrentCurserY()) {
-                    if (tiles[i][j].hasChanged()) {
+                if(4 == board.getCurrentCurserX() && 4 == board.getCurrentCurserY()) {
+                    layerWin.setVisible(true);
+                }
+
+//                if(board.isGameover(board.getCurrentCurserX(), board.getCurrentCurserY())) {
+//                    layerLose.setVisible(true);
+//                }
+
+                if(i == board.getCurrentCurserX() && j == board.getCurrentCurserY()) {
+                    if(tiles[i][j].hasChanged()) {
                         unicornGroup.setTranslation(translationI, translationJ);
                     }
                 } else {
                     Image image;
-                    if (tiles[i][j].hasChanged()) {
+                    if(tiles[i][j].hasChanged()) {
 
-                        if (tiles[i][j].isBlocked()) {
+                        if(tiles[i][j].isBlocked()) {
                             image = assets().getImage("images/felderLOCKED.png");
                             tilesLayer = graphics().createImageLayer(image);
                             subgroup.add(tilesLayer);
                             tilesLayer.setTranslation(translationI, translationJ);
-                        }
-
-                        else if (tiles[i][j].isVisible()) {
+                        } else if(tiles[i][j].isVisible()) {
                             String img = content.getImage(tiles[i][j].getContent());
                             image = assets().getImage(img);
                         } else {
@@ -197,34 +215,34 @@ public class FieldBattle implements Game {
             }
         }
 
-        if (board.eventOccurred) {
-            if (board.currentEventType == Content.Name.FRAGE) {
+        if(board.eventOccurred) {
+            if(board.currentEventType == Content.Name.FRAGE) {
                 questionLayer.setVisible(true);
 
                 tmpEventQuestion = true;
                 try {
                     displayText(this.texts[this.txtIdx], 160, 85);
                     txtIdx++;
-                } catch (ArrayIndexOutOfBoundsException e) {
+                } catch(ArrayIndexOutOfBoundsException e) {
                     txtIdx = 0;
                     displayText(this.texts[this.txtIdx], 160, 85);
                 }
 
-            } else if (board.currentEventType == Content.Name.TRAP) {
+            } else if(board.currentEventType == Content.Name.TRAP) {
                 layerTrap.setVisible(true);
                 tmpEventTrap = true;
-            } else if (board.currentEventType == Content.Name.BODO) {
+            } else if(board.currentEventType == Content.Name.BODO) {
                 layerBodo.setVisible(true);
                 tmpEventBodo = true;
                 try {
                     displayText(this.bodosTexte[this.txtIdx], 140, 85);
                     txtIdx++;
-                } catch (ArrayIndexOutOfBoundsException e) {
+                } catch(ArrayIndexOutOfBoundsException e) {
                     txtIdx = 0;
                     displayText(this.bodosTexte[this.txtIdx], 160, 85);
                 }
 
-            } else if (board.currentEventType.equals(Content.Name.ENEMY)) {
+            } else if(board.currentEventType.equals(Content.Name.ENEMY)) {
                 tempEventFight = true;
                 fightLayer.setVisible(true);
 
@@ -243,11 +261,11 @@ public class FieldBattle implements Game {
         PlayN.keyboard().setListener(new Keyboard.Adapter() {
             @Override
             public void onKeyDown(Event event) {
-                if (!tmpEventTrap && !tempEventFight) {
-                    if (event.key() == Key.Y) {
-                        if (tmpEventQuestion) {
+                if(!tmpEventTrap && !tempEventFight) {
+                    if(event.key() == Key.Y) {
+                        if(tmpEventQuestion) {
                             tmpEventQuestion = false;
-                            if (questionLayer.visible()) {
+                            if(questionLayer.visible()) {
                                 questionLayer.setVisible(false);
                                 textImageLayer.setVisible(false);
                             }
@@ -256,10 +274,10 @@ public class FieldBattle implements Game {
 
                     }
 
-                    if (event.key() == Key.N) {
-                        if (tmpEventQuestion) {
+                    if(event.key() == Key.N) {
+                        if(tmpEventQuestion) {
                             tmpEventQuestion = false;
-                            if (questionLayer.visible()) {
+                            if(questionLayer.visible()) {
                                 questionLayer.setVisible(false);
                                 textImageLayer.setVisible(false);
                             }
@@ -267,49 +285,49 @@ public class FieldBattle implements Game {
                         }
                     }
 
-                    if (event.key() == Key.UP) {
-                        if (questionLayer.visible()) {
+                    if(event.key() == Key.UP) {
+                        if(questionLayer.visible()) {
                             questionLayer.setVisible(false);
                             textImageLayer.setVisible(false);
                         }
-                        if (layerBodo.visible()) {
+                        if(layerBodo.visible()) {
                             layerBodo.setVisible(false);
                             textImageLayer.setVisible(false);
                         }
                         board.moveUp();
                     }
-                    if (event.key() == Key.DOWN) {
+                    if(event.key() == Key.DOWN) {
 
-                        if (questionLayer.visible()) {
+                        if(questionLayer.visible()) {
                             questionLayer.setVisible(false);
                             textImageLayer.setVisible(false);
                         }
-                        if (layerBodo.visible()) {
+                        if(layerBodo.visible()) {
                             layerBodo.setVisible(false);
                             textImageLayer.setVisible(false);
                         }
                         board.moveDown();
 
                     }
-                    if (event.key() == Key.RIGHT) {
+                    if(event.key() == Key.RIGHT) {
 
-                        if (questionLayer.visible()) {
+                        if(questionLayer.visible()) {
                             questionLayer.setVisible(false);
                             textImageLayer.setVisible(false);
                         }
-                        if (layerBodo.visible()) {
+                        if(layerBodo.visible()) {
                             layerBodo.setVisible(false);
                             textImageLayer.setVisible(false);
                         }
                         board.moveRight();
 
                     }
-                    if (event.key() == Key.LEFT) {
-                        if (questionLayer.visible()) {
+                    if(event.key() == Key.LEFT) {
+                        if(questionLayer.visible()) {
                             questionLayer.setVisible(false);
                             textImageLayer.setVisible(false);
                         }
-                        if (layerBodo.visible()) {
+                        if(layerBodo.visible()) {
                             layerBodo.setVisible(false);
                             textImageLayer.setVisible(false);
                         }
@@ -317,27 +335,27 @@ public class FieldBattle implements Game {
                     }
                 }
 
-                if (event.key() == Key.ENTER) {
-                    if (tmpEventTrap) {
-                        if (layerTrap.visible()) {
+                if(event.key() == Key.ENTER) {
+                    if(tmpEventTrap) {
+                        if(layerTrap.visible()) {
                             layerTrap.setVisible(false);
                             board.handeTrap();
                         }
                     }
-                    if (tmpEventBodo) {
-                        if (layerBodo.visible()) {
+                    if(tmpEventBodo) {
+                        if(layerBodo.visible()) {
                             textImageLayer.setVisible(false);
 
                         }
                     }
-                    if (tempEventFight) {
-                        if (fightLayer.visible()) {
+                    if(tempEventFight) {
+                        if(fightLayer.visible()) {
                             fightLayer.setVisible(false);
                             tempEventFight = false;
                         }
                         Random rand = new Random();
                         int randNumber = rand.nextInt(100);
-                        if (randNumber % 2 == 0) {
+                        if(randNumber % 2 == 0) {
                             board.blockTile(board.getCurrentCurserX(), board.getCurrentCurserY());
                             board.updateCursor(board.getLastX(), board.getLastY());
                         }

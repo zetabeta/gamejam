@@ -32,17 +32,20 @@ public class FieldBattle implements Game {
     GroupLayer subgroup;
     CanvasImage textCanvas;
     ImageLayer textImageLayer;
-    String[] texts = new String[]{"hello folks! watta \n beautiful day, isn't it?  Y or N?", "frage2", "frage3", "puzzle4", "penis",
-        "wurst", "salamipizza!", "hotdog", "ice cream!"};
+    String[] texts = new String[]{"Welcher Sinn hat keinen Sinn?\n[J] Unsinn\n[N] Der Sinn des Lebens",
+        "Welcher Planet wird Abendstern \ngenannt?\n[J] Venus\n[N] Mars", "Was verbraucht mehr Strom?\n[J] Das kleine Licht in meinem "
+        + "Kühlschrank!\n[N] Dein Hirn.", "Wer muss manchmal beim Orgasmus \nniesen, weil der Hirnstamm \n„durcheinander“ ist?\n[J] Männer…\n[N] Frauen!",
+        "Welche/r Leiter nützt der \nFeuerwehr nicht?\n[J] Tonleiter \n[N] Wehrleiter",
+        "Wer war der Erfinder der Glühbirne?\n[J] Unbekannt\n[N] Thomas Alva Edison",
+        "Was steht mitten in Paris?\n[J] Das „r“\n[N] Der Eiffelturm!"};
     String[] bodosTexte = new String[]{
-        "Gnak, gnak, gnak \n Schau mal hinter dich, ein dreikoepfiger Affe!",
-        "Wusstest du, dass das kleine Licht im Kuehlschrank \n mehr Strom verbraucht, als unser Gehirn?",
-        "Im Hirnstamm ist manchmal so viel los, dass Maenner beim Orgasmus \n niesen muessen… das kann dir ja nun nicht passieren..",
-        "Unser Gehirn verbraucht nur 12 Watt, also pro Tag die Energie zweier großer Bananen. \n Wie habt ihr das denn damals im Osten gemacht?",
-        "Im Uebringen: Die Insel, die du dir am Anfang erschaffen hast, heißt „N‘Ropinu“ und \n ist weit über die Grenzen deines matschigen \n Gehirns "
-        + "bekannt… denk mal drueber nach!",
-        "Wenn man die gesamten „Nervenbahnen“ des Gehirns aneinander reihen wuerde, kaeme man auf eine Laenge von \nknapp 100 Kilometern. Wahnsinn… "
-        + "Wollen wir deine Nervenbahnen auf der Autobahn suchen gehen?"};
+        "Gnak, gnak, gnak \nSchau mal hinter dich, \nein dreikoepfiger Affe!",
+        "Wusstest du, dass das kleine \nLicht im Kuehlschrank mehr Strom \nverbraucht, als unser Gehirn?",
+        "Im Hirnstamm ist manchmal so \nviel los, dass Maenner beim Orgasmus \nniesen muessen… \ndas kann dir ja nun nicht passieren..",
+        "Unser Gehirn verbraucht nur 12 Watt, \nalso pro Tag die Energie zweier großer \nBananen. Wie habt ihr das denn damals \nim Osten gemacht?",
+        "Im Uebringen: Die Insel, die du dir am \nAnfang erschaffen hast, heißt \n„N‘Ropinu“ und ist weit über die Grenzen \ndeines matschigen Gehirns "
+        + "bekannt… \ndenk mal drueber nach!",
+        "Wenn man die gesamten \n„Nervenbahnen“ des Gehirns \naneinander reihen wuerde, \nkaeme man auf eine Laenge von \nknapp 100 Kilometern. \nWahnsinn… "};
     int txtIdx = 0;
     boolean tmpEventQuestion = false;
     boolean tmpEventTrap = false;
@@ -116,16 +119,16 @@ public class FieldBattle implements Game {
         initKeyboardListener();
     }
 
-    private void displayText(String text) {
+    private void displayText(String text, int translationx, int translationy) {
         textCanvas.canvas().clear();
         Canvas canvas = textCanvas.canvas();
         String[] lines = text.split("\n");
 
         for(int i = 0; i < lines.length; ++i) {
-            canvas.drawText(lines[i], 200, 20 * 2 * (i + 1));
+            canvas.drawText(lines[i], 200, 10 * 2 * (i + 1));
         }
         textImageLayer = graphics().createImageLayer(textCanvas);
-        textImageLayer.setTranslation(160, 60);
+        textImageLayer.setTranslation(translationx, translationy);
         group.add(textImageLayer);
 
     }
@@ -177,9 +180,14 @@ public class FieldBattle implements Game {
         if(board.eventOccurred) {
             if(board.currentEventType == Content.Name.FRAGE) {
                 layer3.setVisible(true);
-                displayText(this.texts[this.txtIdx]);
-                txtIdx++;
                 tmpEventQuestion = true;
+                try {
+                    displayText(this.texts[this.txtIdx], 160, 85);
+                    txtIdx++;
+                } catch(ArrayIndexOutOfBoundsException e) {
+                    txtIdx = 0;
+                    displayText(this.texts[this.txtIdx], 160, 85);
+                }
 
             } else if(board.currentEventType == Content.Name.TRAP) {
                 layerTrap.setVisible(true);
@@ -189,9 +197,14 @@ public class FieldBattle implements Game {
                 tmpEventTrap = true;
             } else if(board.currentEventType == Content.Name.BODO) {
                 layerBodo.setVisible(true);
-                displayText(this.bodosTexte[this.txtIdx]);
-                txtIdx++;
                 tmpEventBodo = true;
+                try {
+                    displayText(this.bodosTexte[this.txtIdx], 140, 85);
+                    txtIdx++;
+                } catch(ArrayIndexOutOfBoundsException e) {
+                    txtIdx = 0;
+                    displayText(this.bodosTexte[this.txtIdx], 160, 85);
+                }
             } else if(board.currentEventType.equals(Content.Name.ENEMY)) {
                 Random rand = new Random();
                 int randNumber = rand.nextInt(100);
@@ -252,8 +265,6 @@ public class FieldBattle implements Game {
                         board.moveUp();
                     }
                     if(event.key() == Key.DOWN) {
-
-
 
                         if(layer3.visible()) {
                             layer3.setVisible(false);

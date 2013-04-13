@@ -20,10 +20,11 @@ public class FieldBattle implements Game {
     ImageLayer layer2;
     ImageLayer layer3;
     GroupLayer group;
+    private int offset = 80;
 
     @Override
     public void init() {
-        Image bgImage = assets().getImage("images/background.png");
+        Image bgImage = assets().getImage("images/background1.png");
         ImageLayer bgLayer = graphics().createImageLayer(bgImage);
         graphics().rootLayer().add(bgLayer);
         group = graphics().createGroupLayer();
@@ -33,12 +34,12 @@ public class FieldBattle implements Game {
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
 
-                int translationI = i * 100;
+                int translationI = offset + i * 100;
                 int translationJ = j * 100;
 
                 if (i == board.getCurrentCurserX() && j == board.getCurrentCurserY()) {
                     if (tiles[i][j].hasChanged()) {
-                        Image focused = assets().getImage("images/felderCHAR.png");
+                        Image focused = assets().getImage("images/ninjas.png");
                         focusBackgroundLayer = graphics().createImageLayer(focused);
                         group.add(focusBackgroundLayer);
                         focusBackgroundLayer.setTranslation(translationI, translationJ);
@@ -50,7 +51,9 @@ public class FieldBattle implements Game {
                             String img = content.getImage(tiles[i][j].getContent());
                             image = assets().getImage(img);
                         } else {
-                            image = assets().getImage("images/fogofwarfeldungeklickt.png");
+                            // image =
+                            // assets().getImage("images/fogofwarfeldungeklickt.png");
+                            image = assets().getImage("images/button.png");
                         }
                         layer2 = graphics().createImageLayer(image);
                         group.add(layer2);
@@ -83,12 +86,12 @@ public class FieldBattle implements Game {
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
 
-                int translationI = i * 100;
+                int translationI = offset + i * 100;
                 int translationJ = j * 100;
 
                 if (i == board.getCurrentCurserX() && j == board.getCurrentCurserY()) {
                     if (tiles[i][j].hasChanged()) {
-                        Image focused = assets().getImage("images/felderCHAR.png");
+                        Image focused = assets().getImage("images/ninjas.png");
                         focusBackgroundLayer = graphics().createImageLayer(focused);
                         graphics().rootLayer().add(focusBackgroundLayer);
                         focusBackgroundLayer.setTranslation(translationI, translationJ);

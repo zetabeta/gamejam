@@ -12,13 +12,13 @@ public class Content {
 
     public Content() {
         this.imgs = new HashMap<Content.Name, String>();
-        this.imgs.put(Name.BODO, "images/felderBODO.png");
-        this.imgs.put(Name.TRAP, "images/felderTRAP.png");
-        this.imgs.put(Name.EMPTY, "images/feldungeklickt.png");
-        this.imgs.put(Name.CLOSED, "images/felderCLOSED.png");
-        this.imgs.put(Name.FRAGE, "images/felderFRAGE.png");
-        this.imgs.put(Name.TREASURE, "images/felderBRAIN.png");
-        this.imgs.put(Name.PLAYER, "images/felderCHAR.png");
+        this.imgs.put(Name.BODO, "images/bodo.png");
+        this.imgs.put(Name.TRAP, "images/trap.png");
+        this.imgs.put(Name.EMPTY, "images/buttonlight.png");
+        this.imgs.put(Name.CLOSED, "images/locked.png");
+        this.imgs.put(Name.FRAGE, "images/question.png");
+        this.imgs.put(Name.TREASURE, "images/ninjas.png");
+        this.imgs.put(Name.PLAYER, "images/ninjas.png");
 
     }
 

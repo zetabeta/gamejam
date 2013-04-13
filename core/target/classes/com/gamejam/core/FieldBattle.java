@@ -21,6 +21,7 @@ public class FieldBattle implements Game {
     ImageLayer layer3;
     GroupLayer group;
     private int offset = 80;
+    GroupLayer subgroup;
 
     @Override
     public void init() {
@@ -29,6 +30,8 @@ public class FieldBattle implements Game {
         graphics().rootLayer().add(bgLayer);
         group = graphics().createGroupLayer();
         graphics().rootLayer().add(group);
+        subgroup = graphics().createGroupLayer();
+        group.add(subgroup);
         // //
         Tile[][] tiles = board.getTiles();
         for (int i = 0; i < tiles.length; i++) {
@@ -41,7 +44,7 @@ public class FieldBattle implements Game {
                     if (tiles[i][j].hasChanged()) {
                         Image focused = assets().getImage("images/ninjas.png");
                         focusBackgroundLayer = graphics().createImageLayer(focused);
-                        group.add(focusBackgroundLayer);
+                        subgroup.add(focusBackgroundLayer);
                         focusBackgroundLayer.setTranslation(translationI, translationJ);
                     }
                 } else {
@@ -56,7 +59,7 @@ public class FieldBattle implements Game {
                             image = assets().getImage("images/button.png");
                         }
                         layer2 = graphics().createImageLayer(image);
-                        group.add(layer2);
+                        subgroup.add(layer2);
                         layer2.setTranslation(translationI, translationJ);
                     }
                 }
@@ -93,7 +96,7 @@ public class FieldBattle implements Game {
                     if (tiles[i][j].hasChanged()) {
                         Image focused = assets().getImage("images/ninjas.png");
                         focusBackgroundLayer = graphics().createImageLayer(focused);
-                        graphics().rootLayer().add(focusBackgroundLayer);
+                        subgroup.add(focusBackgroundLayer);
                         focusBackgroundLayer.setTranslation(translationI, translationJ);
                     }
                 } else {
@@ -103,10 +106,10 @@ public class FieldBattle implements Game {
                             String img = content.getImage(tiles[i][j].getContent());
                             image = assets().getImage(img);
                         } else {
-                            image = assets().getImage("images/fogofwarfeldungeklickt.png");
+                            image = assets().getImage("images/button.png");
                         }
                         layer2 = graphics().createImageLayer(image);
-                        graphics().rootLayer().add(layer2);
+                        subgroup.add(layer2);
                         layer2.setTranslation(translationI, translationJ);
                     }
                 }

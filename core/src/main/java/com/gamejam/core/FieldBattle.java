@@ -2,6 +2,9 @@ package com.gamejam.core;
 
 import static playn.core.PlayN.assets;
 import static playn.core.PlayN.graphics;
+
+import java.util.Random;
+
 import playn.core.Canvas;
 import playn.core.CanvasImage;
 import playn.core.Game;
@@ -165,8 +168,12 @@ public class FieldBattle implements Game {
                 layerTrap.setVisible(true);
 
             } else if (board.currentEventType.equals(Content.Name.ENEMY)) {
-                board.blockTile(board.getCurrentCurserX(), board.getCurrentCurserY());
-                board.updateCursor(board.getLastX(), board.getLastY());
+                Random rand = new Random();
+                int randNumber = rand.nextInt(100);
+                if (randNumber % 2 == 0) {
+                    board.blockTile(board.getCurrentCurserX(), board.getCurrentCurserY());
+                    board.updateCursor(board.getLastX(), board.getLastY());
+                }
             }
             board.eventOccurred = false;
         }

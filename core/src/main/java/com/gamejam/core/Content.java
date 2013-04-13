@@ -3,9 +3,12 @@ package com.gamejam.core;
 import java.util.HashMap;
 import java.util.Map;
 
+import playn.core.Image;
+
 public class Content {
 
-    private Map<Name, String> imgs;
+    public Map<Name, String> imgs;
+    public Map<Name, Image> cached;
 
     public Content() {
         this.imgs = new HashMap<Content.Name, String>();
@@ -16,6 +19,7 @@ public class Content {
         this.imgs.put(Name.FRAGE, "images/felderFRAGE.png");
         this.imgs.put(Name.TREASURE, "images/felderBRAIN.png");
         this.imgs.put(Name.PLAYER, "images/felderCHAR.png");
+
     }
 
     public String getImage(Name name) {

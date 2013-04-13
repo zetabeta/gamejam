@@ -23,6 +23,7 @@ public class FieldBattle implements Game {
         Image bgImage = assets().getImage("images/background.png");
         ImageLayer bgLayer = graphics().createImageLayer(bgImage);
         graphics().rootLayer().add(bgLayer);
+
         initKeyboardListener();
     }
 
@@ -44,24 +45,30 @@ public class FieldBattle implements Game {
                 int translationI = i * 100;
                 int translationJ = j * 100;
 
-                Image image;
-                if (tiles[i][j].isVisible()) {
-                    String img = content.getImage(tiles[i][j].getContent());
-                    image = assets().getImage(img);
-                } else {
-                    image = assets().getImage("images/fogofwarfeldungeklickt.png");
-                }
-
-                layer2 = graphics().createImageLayer(image);
-                graphics().rootLayer().add(layer2);
-                layer2.setTranslation(translationI, translationJ);
-
                 if (i == board.getCurrentCurserX() && j == board.getCurrentCurserY()) {
-                    Image focused = assets().getImage("images/felderCHAR.png");
-                    focusBackgroundLayer = graphics().createImageLayer(focused);
-                    graphics().rootLayer().add(focusBackgroundLayer);
-                    focusBackgroundLayer.setTranslation(translationI, translationJ);
+                    if (tiles[i][j].hasChanged()) {
+                        Image focused = assets().getImage("images/felderCHAR.png");
+                        focusBackgroundLayer = graphics().createImageLayer(focused);
+                        graphics().rootLayer().add(focusBackgroundLayer);
+                        focusBackgroundLayer.setTranslation(translationI, translationJ);
+                    }
+                } else {
+                    Image image;
+                    if (tiles[i][j].hasChanged()) {
+                        if (tiles[i][j].isVisible()) {
+                            String img = content.getImage(tiles[i][j].getContent());
+                            image = assets().getImage(img);
+                        } else {
+
+                            image = assets().getImage("images/fogofwarfeldungeklickt.png");
+                        }
+                        layer2 = graphics().createImageLayer(image);
+                        graphics().rootLayer().add(layer2);
+                        layer2.setTranslation(translationI, translationJ);
+                    }
+
                 }
+
             }
         }
 

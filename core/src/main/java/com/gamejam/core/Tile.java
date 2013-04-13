@@ -5,6 +5,7 @@ public class Tile {
     private Content.Name content;
     private boolean visible;
     private boolean current;
+    private boolean hasChanged = true;
 
     public boolean isCurrent() {
         return current;
@@ -12,6 +13,7 @@ public class Tile {
 
     public void setCurrent(boolean current) {
         this.current = current;
+        setHasChanged(true);
     }
 
     public Content.Name getContent() {
@@ -20,6 +22,7 @@ public class Tile {
 
     public void setContent(Content.Name content) {
         this.content = content;
+        setHasChanged(true);
     }
 
     public boolean isVisible() {
@@ -28,5 +31,16 @@ public class Tile {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+        setHasChanged(true);
+    }
+
+    public boolean hasChanged() {
+        boolean temp = hasChanged;
+        hasChanged = false;
+        return temp;
+    }
+
+    public void setHasChanged(boolean hasChanged) {
+        this.hasChanged = hasChanged;
     }
 }

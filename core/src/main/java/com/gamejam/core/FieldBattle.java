@@ -82,7 +82,7 @@ public class FieldBattle implements Game {
         group.add(layer3);
         layer3.setTranslation(50, 20);
         layer3.setVisible(false);
-        textCanvas = graphics().createImage(350, 350);
+        textCanvas = graphics().createImage(500, 500);
 
         initKeyboardListener();
     }
@@ -95,12 +95,9 @@ public class FieldBattle implements Game {
             canvas.drawText(lines[i], 200, 20 * 2 * (i + 1));
         }
         textImageLayer = graphics().createImageLayer(textCanvas);
-        textImageLayer.setTranslation(70, 20);
+        textImageLayer.setTranslation(160, 60);
         group.add(textImageLayer);
 
-//        ImageLayer get = (ImageLayer) subgroup.get(subgroup.size() - 1);
-//        get.setImage(textCanvas);
-//        get.setTranslation(70, 20);
     }
 
     @Override
@@ -110,13 +107,9 @@ public class FieldBattle implements Game {
     @Override
     public void update(float delta) {
 
-
-
         Tile[][] tiles = board.getTiles();
         for(int i = 0; i < tiles.length; i++) {
             for(int j = 0; j < tiles[i].length; j++) {
-
-
 
                 int translationI = offset + i * 100;
                 int translationJ = j * 100;
@@ -130,11 +123,10 @@ public class FieldBattle implements Game {
                     Image image;
                     if(tiles[i][j].isBlocked()) {
                         System.out.println("second");
-                        image = assets().getImage("images/felderBODO.png");
+                        image = assets().getImage("images/felderLOCKED.png");
                         layer2 = graphics().createImageLayer(image);
                         subgroup.add(layer2);
                         layer2.setTranslation(translationI, translationJ);
-
                     }
                     if(tiles[i][j].hasChanged()) {
                         System.out.println("third");
@@ -149,11 +141,8 @@ public class FieldBattle implements Game {
 
                         layer2.setTranslation(translationI, translationJ);
                     }
-
                 }
-
             }
-
         }
 
         if(board.eventOccurred) {

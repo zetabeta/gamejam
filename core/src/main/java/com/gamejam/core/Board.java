@@ -154,8 +154,10 @@ public class Board {
     private void processEvent() {
         if(!tiles[currentCurserX][currentCurserY].getContent().equals(Content.Name.EMPTY)) {
             eventOccurred = true;
+            currentEventType = tiles[currentCurserX][currentCurserY].getContent();
         }
     }
+    public Content.Name currentEventType = null;
 
     private void blockTile(int newX, int newY) {
         System.out.println("block x: " + newX + " y: " + newY);

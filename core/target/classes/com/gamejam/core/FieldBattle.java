@@ -121,6 +121,7 @@ public class FieldBattle implements Game {
     }
 
     private void displayText(String text) {
+        textCanvas.canvas().clear();
         Canvas canvas = textCanvas.canvas();
         String[] lines = text.split("\n");
 

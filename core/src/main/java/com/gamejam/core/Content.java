@@ -19,7 +19,7 @@ public class Content {
         this.imgs.put(Name.FRAGE, "images/felderQUESTION.png");
         this.imgs.put(Name.TREASURE, "images/felderBRAIN.png");
         this.imgs.put(Name.PLAYER, "images/feldHERO.png");
-        this.imgs.put(Name.ENEMY, "images/feldENEMY.png");
+        this.imgs.put(Name.ENEMY, "images/felderENEMY.png");
     }
 
     public String getImage(Name name) {

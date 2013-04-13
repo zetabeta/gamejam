@@ -18,13 +18,13 @@ public class Board {
     public Board() {
         ArrayList<Content.Name> contentList = new ArrayList<Content.Name>(Arrays.asList(contents));
         Collections.shuffle(contentList);
-        for(int i = 0; i < xSize; i++) {
-            for(int j = 0; j < ySize; j++) {
+        for (int i = 0; i < xSize; i++) {
+            for (int j = 0; j < ySize; j++) {
                 Tile tile = new Tile();
-                if(i == 0 && j == 0) {
+                if (i == 0 && j == 0) {
                     tile.setContent(Content.Name.PLAYER);
                     tile.setVisible(true);
-                } else if(i == 4 && j == 4) {
+                } else if (i == 4 && j == 4) {
                     tile.setContent(Content.Name.TREASURE);
                     tile.setVisible(true);
                 } else {
@@ -62,7 +62,7 @@ public class Board {
     public void updateCursor(int x, int y) {
         System.out.println("update x: " + x + " y: " + y);
         tiles[currentCurserX][currentCurserY].setCurrent(false);
-        if(currentCurserX == 0 && currentCurserY == 0) {
+        if (currentCurserX == 0 && currentCurserY == 0) {
             tiles[currentCurserX][currentCurserY].setContent(Content.Name.EMPTY);
         }
         currentCurserX = x;
@@ -74,11 +74,12 @@ public class Board {
     public Tile getCurrentCurserTile() {
         return tiles[currentCurserX][currentCurserY];
     }
-    Content.Name[] contents = new Content.Name[]{Content.Name.BODO, Content.Name.EMPTY, Content.Name.CLOSED, Content.Name.EMPTY,
-        Content.Name.FRAGE, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.BODO, Content.Name.TRAP,
-        Content.Name.FRAGE, Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.BODO,
-        Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY, Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY,
-        Content.Name.EMPTY, Content.Name.BODO, Content.Name.CLOSED};
+
+    Content.Name[] contents = new Content.Name[] { Content.Name.BODO, Content.Name.EMPTY, Content.Name.CLOSED, Content.Name.EMPTY,
+            Content.Name.FRAGE, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.ENEMY, Content.Name.ENEMY, Content.Name.TRAP,
+            Content.Name.ENEMY, Content.Name.TRAP, Content.Name.ENEMY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.BODO,
+            Content.Name.TRAP, Content.Name.ENEMY, Content.Name.ENEMY, Content.Name.ENEMY, Content.Name.BODO, Content.Name.EMPTY,
+            Content.Name.EMPTY, Content.Name.ENEMY, Content.Name.ENEMY };
 
     public Tile[][] getTiles() {
         return this.tiles;
@@ -88,8 +89,8 @@ public class Board {
         saveLastCurser(getCurrentCurserX(), getCurrentCurserY());
         int newX = getCurrentCurserX();
         int newY = getCurrentCurserY() - 1;
-        if(newX >= 0 && newY >= 0 && newX < xSize && newY < xSize) {
-            if(!this.tiles[newX][newY].isBlocked()) {
+        if (newX >= 0 && newY >= 0 && newX < xSize && newY < xSize) {
+            if (!this.tiles[newX][newY].isBlocked()) {
                 updateCursor(newX, newY);
                 processEvent();
             }
@@ -105,8 +106,8 @@ public class Board {
         saveLastCurser(getCurrentCurserX(), getCurrentCurserY());
         int newX = getCurrentCurserX();
         int newY = getCurrentCurserY() + 1;
-        if(newX >= 0 && newY >= 0 && newX < xSize && newY < xSize) {
-            if(!this.tiles[newX][newY].isBlocked()) {
+        if (newX >= 0 && newY >= 0 && newX < xSize && newY < xSize) {
+            if (!this.tiles[newX][newY].isBlocked()) {
                 updateCursor(newX, newY);
                 processEvent();
             }
@@ -117,7 +118,7 @@ public class Board {
 
     public void handleAnswer(boolean answer) {
         System.out.println("answer " + answer);
-        if(answer) {
+        if (answer) {
             // do nothing
         } else {
             blockTile(getCurrentCurserX(), getCurrentCurserY());
@@ -129,8 +130,8 @@ public class Board {
         saveLastCurser(getCurrentCurserX(), getCurrentCurserY());
         int newX = getCurrentCurserX() + 1;
         int newY = getCurrentCurserY();
-        if(newX >= 0 && newY >= 0 && newX < xSize && newY < xSize) {
-            if(!this.tiles[newX][newY].isBlocked()) {
+        if (newX >= 0 && newY >= 0 && newX < xSize && newY < xSize) {
+            if (!this.tiles[newX][newY].isBlocked()) {
                 updateCursor(newX, newY);
                 processEvent();
             }
@@ -142,8 +143,8 @@ public class Board {
         saveLastCurser(getCurrentCurserX(), getCurrentCurserY());
         int newX = getCurrentCurserX() - 1;
         int newY = getCurrentCurserY();
-        if(newX >= 0 && newY >= 0 && newX < xSize && newY < xSize) {
-            if(!this.tiles[newX][newY].isBlocked()) {
+        if (newX >= 0 && newY >= 0 && newX < xSize && newY < xSize) {
+            if (!this.tiles[newX][newY].isBlocked()) {
                 updateCursor(newX, newY);
                 processEvent();
             }
@@ -152,11 +153,12 @@ public class Board {
     }
 
     private void processEvent() {
-        if(!tiles[currentCurserX][currentCurserY].getContent().equals(Content.Name.EMPTY)) {
+        if (!tiles[currentCurserX][currentCurserY].getContent().equals(Content.Name.EMPTY)) {
             eventOccurred = true;
             currentEventType = tiles[currentCurserX][currentCurserY].getContent();
         }
     }
+
     public Content.Name currentEventType = null;
 
     public void blockTile(int newX, int newY) {

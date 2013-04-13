@@ -6,9 +6,18 @@ public class Tile {
     private boolean visible;
     private boolean current;
     private boolean hasChanged = true;
+    private boolean isBlocked = false;
 
     public boolean isCurrent() {
         return current;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean isBlocked) {
+        this.isBlocked = isBlocked;
     }
 
     public void setCurrent(boolean current) {

@@ -1,7 +1,5 @@
 package com.gamejam.core;
 
-import static playn.core.PlayN.assets;
-import static playn.core.PlayN.graphics;
 import playn.core.Canvas;
 import playn.core.CanvasImage;
 import playn.core.Game;
@@ -12,6 +10,8 @@ import playn.core.Key;
 import playn.core.Keyboard;
 import playn.core.Keyboard.Event;
 import playn.core.PlayN;
+import static playn.core.PlayN.assets;
+import static playn.core.PlayN.graphics;
 
 //test
 public class FieldBattle implements Game {
@@ -26,13 +26,12 @@ public class FieldBattle implements Game {
     GroupLayer subgroup;
     CanvasImage textCanvas;
     ImageLayer textImageLayer;
-
-    String[] texts = new String[] { "hello folks! watta beautiful day, isn't it?  Y or N?", "frage2", "frage3", "puzzle4", "penis",
-            "wurst", "salamipizza!", "hotdog", "ice cream!" };
+    String[] texts = new String[]{"hello folks! watta \nbeautiful day, isn't it?  Y or N?", "frage2", "frage3", "puzzle4", "penis",
+        "wurst", "salamipizza!", "hotdog", "ice cream!"};
     int txtIdx = 0;
+    boolean tmpEvent = false;
 
     // Layer comixBubble;
-
     @Override
     public void init() {
         Image bgImage = assets().getImage("images/background1.png");
@@ -44,14 +43,14 @@ public class FieldBattle implements Game {
         group.add(subgroup);
         // //
         Tile[][] tiles = board.getTiles();
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
+        for(int i = 0; i < tiles.length; i++) {
+            for(int j = 0; j < tiles[i].length; j++) {
 
                 int translationI = offset + i * 100;
                 int translationJ = j * 100;
 
-                if (i == board.getCurrentCurserX() && j == board.getCurrentCurserY()) {
-                    if (tiles[i][j].hasChanged()) {
+                if(i == board.getCurrentCurserX() && j == board.getCurrentCurserY()) {
+                    if(tiles[i][j].hasChanged()) {
                         Image focused = assets().getImage("images/ninjas.png");
                         focusBackgroundLayer = graphics().createImageLayer(focused);
                         subgroup.add(focusBackgroundLayer);
@@ -59,8 +58,8 @@ public class FieldBattle implements Game {
                     }
                 } else {
                     Image image;
-                    if (tiles[i][j].hasChanged()) {
-                        if (tiles[i][j].isVisible()) {
+                    if(tiles[i][j].hasChanged()) {
+                        if(tiles[i][j].isVisible()) {
                             String img = content.getImage(tiles[i][j].getContent());
                             image = assets().getImage(img);
                         } else {
@@ -101,7 +100,6 @@ public class FieldBattle implements Game {
 
     @Override
     public void paint(float delta) {
-
     }
 
     @Override
@@ -111,14 +109,14 @@ public class FieldBattle implements Game {
         layer2 = null;
 
         Tile[][] tiles = board.getTiles();
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
+        for(int i = 0; i < tiles.length; i++) {
+            for(int j = 0; j < tiles[i].length; j++) {
 
                 int translationI = offset + i * 100;
                 int translationJ = j * 100;
 
-                if (i == board.getCurrentCurserX() && j == board.getCurrentCurserY()) {
-                    if (tiles[i][j].hasChanged()) {
+                if(i == board.getCurrentCurserX() && j == board.getCurrentCurserY()) {
+                    if(tiles[i][j].hasChanged()) {
                         Image focused = assets().getImage("images/ninjas.png");
                         focusBackgroundLayer = graphics().createImageLayer(focused);
                         subgroup.add(focusBackgroundLayer);
@@ -126,8 +124,14 @@ public class FieldBattle implements Game {
                     }
                 } else {
                     Image image;
-                    if (tiles[i][j].hasChanged()) {
-                        if (tiles[i][j].isVisible()) {
+                    if(tiles[i][j].isBlocked()) {
+                        image = assets().getImage("images/felderBODO.png");
+                        layer2 = graphics().createImageLayer(image);
+                        subgroup.add(layer2);
+                        layer2.setTranslation(translationI, translationJ);
+                    }
+                    if(tiles[i][j].hasChanged()) {
+                        if(tiles[i][j].isVisible()) {
                             String img = content.getImage(tiles[i][j].getContent());
                             image = assets().getImage(img);
                         } else {
@@ -137,14 +141,17 @@ public class FieldBattle implements Game {
                         subgroup.add(layer2);
                         layer2.setTranslation(translationI, translationJ);
                     }
+
                 }
+
             }
         }
 
-        if (board.eventOccurred) {
+        if(board.eventOccurred) {
             layer3.setVisible(true);
             displayText(this.texts[this.txtIdx]);
             txtIdx++;
+            tmpEvent = true;
             board.eventOccurred = false;
         }
 
@@ -161,36 +168,61 @@ public class FieldBattle implements Game {
             @Override
             public void onKeyDown(Event event) {
 
-                if (event.key() == Key.UP) {
-                    if (layer3.visible()) {
+
+                if(event.key() == Key.Y) {
+                    if(tmpEvent) {
+                        tmpEvent = false;
+                        if(layer3.visible()) {
+                            layer3.setVisible(false);
+                            textImageLayer.setVisible(false);
+                        }
+                        board.handleAnswer(true);
+                    }
+
+                }
+
+                if(event.key() == Key.N) {
+                    if(tmpEvent) {
+                        tmpEvent = false;
+                        if(layer3.visible()) {
+                            layer3.setVisible(false);
+                            textImageLayer.setVisible(false);
+                        }
+                        board.handleAnswer(false);
+                    }
+                }
+
+                if(event.key() == Key.UP) {
+                    if(layer3.visible()) {
                         layer3.setVisible(false);
                         textImageLayer.setVisible(false);
                     }
                     board.moveUp();
                 }
-                if (event.key() == Key.DOWN) {
-                    if (layer3.visible()) {
+                if(event.key() == Key.DOWN) {
+                    if(layer3.visible()) {
                         layer3.setVisible(false);
                         textImageLayer.setVisible(false);
                     }
                     board.moveDown();
                 }
-                if (event.key() == Key.RIGHT) {
-                    if (layer3.visible()) {
+                if(event.key() == Key.RIGHT) {
+                    if(layer3.visible()) {
                         layer3.setVisible(false);
                         textImageLayer.setVisible(false);
                     }
                     board.moveRight();
                 }
-                if (event.key() == Key.LEFT) {
-                    if (layer3.visible()) {
+                if(event.key() == Key.LEFT) {
+                    if(layer3.visible()) {
                         layer3.setVisible(false);
                         textImageLayer.setVisible(false);
                     }
                     board.moveLeft();
                 }
-                if (event.key() == Key.ENTER) {
+                if(event.key() == Key.ENTER) {
                     System.out.println("key enter");
+                    System.out.println("board.eventOccurred " + board.eventOccurred);
                 }
 
             }

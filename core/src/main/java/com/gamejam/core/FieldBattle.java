@@ -15,6 +15,7 @@ import playn.core.Key;
 import playn.core.Keyboard;
 import playn.core.Keyboard.Event;
 import playn.core.PlayN;
+import playn.core.Sound;
 
 //test
 public class FieldBattle implements Game {
@@ -39,13 +40,13 @@ public class FieldBattle implements Game {
     CanvasImage textCanvas;
     ImageLayer textImageLayer;
 
-    String[] texts = new String[] { "Welcher Sinn hat keinen Sinn?\n[J] Unsinn\n[N] Der Sinn des Lebens",
-            "Welcher Planet wird Abendstern \ngenannt?\n[J] Venus\n[N] Mars",
-            "Was verbraucht mehr Strom?\n[J] Das kleine Licht in meinem " + "Kühlschrank!\n[N] Dein Hirn.",
-            "Wer muss manchmal beim Orgasmus \nniesen, weil der Hirnstamm \n„durcheinander“ ist?\n[J] Männer…\n[N] Frauen!",
-            "Welche/r Leiter nützt der \nFeuerwehr nicht?\n[J] Tonleiter \n[N] Wehrleiter",
-            "Wer war der Erfinder der Glühbirne?\n[J] Unbekannt\n[N] Thomas Alva Edison",
-            "Was steht mitten in Paris?\n[J] Das „r“\n[N] Der Eiffelturm!" };
+    String[] texts = new String[] { "Welcher Sinn hat keinen Sinn?\n[Y] Unsinn\n[N] Der Sinn des Lebens",
+            "Welcher Planet wird Abendstern \ngenannt?\n[Y] Venus\n[N] Mars",
+            "Was verbraucht mehr Strom?\n[Y] Das kleine Licht in meinem " + "Kühlschrank!\n[N] Dein Hirn.",
+            "Wer muss manchmal beim Orgasmus \nniesen, weil der Hirnstamm \n„durcheinander“ ist?\n[Y] Männer…\n[N] Frauen!",
+            "Welche/r Leiter nützt der \nFeuerwehr nicht?\n[Y] Tonleiter \n[N] Wehrleiter",
+            "Wer war der Erfinder der Glühbirne?\n[Y] Unbekannt\n[N] Thomas Alva Edison",
+            "Was steht mitten in Paris?\n[Y] Das „r“\n[N] Der Eiffelturm!" };
     String[] bodosTexte = new String[] {
             "Gnak, gnak, gnak \nSchau mal hinter dich, \nein dreikoepfiger Affe!",
             "Wusstest du, dass das kleine \nLicht im Kuehlschrank mehr Strom \nverbraucht, als unser Gehirn?",
@@ -121,7 +122,7 @@ public class FieldBattle implements Game {
         Image bodoImage = assets().getImage("images/popupBODO.png");
         layerBodo = graphics().createImageLayer(bodoImage);
         chatGroup.add(layerBodo);
-        layerBodo.setTranslation(50, 20);
+        layerBodo.setTranslation(40, 5);
         layerBodo.setVisible(false);
         textBodo = graphics().createImage(500, 500);
 
@@ -134,15 +135,16 @@ public class FieldBattle implements Game {
         Image fightImage = assets().getImage("images/popupENEMY.png");
         fightLayer = graphics().createImageLayer(fightImage);
         chatGroup.add(fightLayer);
-        fightLayer.setTranslation(50, 20);
+        fightLayer.setTranslation(30, 20);
         fightLayer.setVisible(false);
 
         initKeyboardListener();
 
-        // Sound test = PlayN.assets().getSound("sounds/mpthreetest");
-        // test.setLooping(true);
-        // test.prepare();
-        // test.play();
+        Sound test = PlayN.assets().getSound("sounds/background1");
+        test.setLooping(true);
+        test.setVolume(1f);
+        test.prepare();
+        test.play();
     }
 
     private void displayText(String text, int translationx, int translationy) {

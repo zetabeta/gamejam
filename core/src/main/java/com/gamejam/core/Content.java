@@ -17,7 +17,7 @@ public class Content {
         this.imgs.put(Name.EMPTY, "images/felderEMPTY.png");
         this.imgs.put(Name.CLOSED, "images/felderLOCKED.png");
         this.imgs.put(Name.FRAGE, "images/felderQUESTION.png");
-        this.imgs.put(Name.TREASURE, "images/felderBRAIN.png");
+        this.imgs.put(Name.TREASURE, "images/felderBRAIN2.png");
         this.imgs.put(Name.PLAYER, "images/feldHERO.png");
         this.imgs.put(Name.ENEMY, "images/felderENEMY.png");
     }

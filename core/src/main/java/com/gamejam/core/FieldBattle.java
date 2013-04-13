@@ -96,7 +96,6 @@ public class FieldBattle implements Game {
         layerBodo.setVisible(false);
         textBodo = graphics().createImage(500, 500);
 
-
         Image trapImage = assets().getImage("images/popupTRAP.png");
         layerTrap = graphics().createImageLayer(trapImage);
         group.add(layerTrap);
@@ -171,7 +170,7 @@ public class FieldBattle implements Game {
                 displayText(this.texts[this.txtIdx]);
                 txtIdx++;
                 tmpEventQuestion = true;
-                board.eventOccurred = false;
+
             } else if(board.currentEventType == Content.Name.TRAP) {
                 layerTrap.setVisible(true);
                 tmpEventTrap = true;
@@ -182,7 +181,12 @@ public class FieldBattle implements Game {
                 txtIdx++;
                 tmpEventBodo = true;
                 board.eventOccurred = false;
+
+            } else if(board.currentEventType.equals(Content.Name.ENEMY)) {
+                board.blockTile(board.getCurrentCurserX(), board.getCurrentCurserY());
+                board.updateCursor(board.getLastX(), board.getLastY());
             }
+            board.eventOccurred = false;
         }
 
     }
@@ -198,11 +202,11 @@ public class FieldBattle implements Game {
             @Override
             public void onKeyDown(Event event) {
 
-
                 if(event.key() == Key.Y) {
                     if(tmpEventQuestion) {
                         tmpEventQuestion = false;
                         if(layer3.visible()) {
+
                             layer3.setVisible(false);
                             textImageLayer.setVisible(false);
                         }
@@ -250,6 +254,7 @@ public class FieldBattle implements Game {
                     }
                     board.moveLeft();
                 }
+
                 if(event.key() == Key.ENTER) {
                     if(tmpEventTrap) {
                         if(layerTrap.visible()) {

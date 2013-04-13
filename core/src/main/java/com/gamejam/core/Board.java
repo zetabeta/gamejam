@@ -78,7 +78,7 @@ public class Board {
         Content.Name.FRAGE, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.BODO, Content.Name.TRAP,
         Content.Name.FRAGE, Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.BODO,
         Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY, Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY,
-        Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.CLOSED};
+        Content.Name.EMPTY, Content.Name.BODO, Content.Name.CLOSED};
 
     public Tile[][] getTiles() {
         return this.tiles;
@@ -118,7 +118,7 @@ public class Board {
     public void handleAnswer(boolean answer) {
         System.out.println("answer " + answer);
         if(answer) {
-            //do nothing
+            // do nothing
         } else {
             blockTile(getCurrentCurserX(), getCurrentCurserY());
             updateCursor(getLastX(), getLastY());
@@ -159,7 +159,7 @@ public class Board {
     }
     public Content.Name currentEventType = null;
 
-    private void blockTile(int newX, int newY) {
+    public void blockTile(int newX, int newY) {
         System.out.println("block x: " + newX + " y: " + newY);
         tiles[newX][newY].setBlocked(true);
     }

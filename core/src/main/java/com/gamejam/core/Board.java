@@ -78,7 +78,7 @@ public class Board {
         Content.Name.FRAGE, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.BODO, Content.Name.TRAP,
         Content.Name.FRAGE, Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.BODO,
         Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY, Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY,
-        Content.Name.EMPTY, Content.Name.BODO, Content.Name.CLOSED};
+        Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.CLOSED};
 
     public Tile[][] getTiles() {
         return this.tiles;

@@ -22,6 +22,8 @@ public class FieldBattle implements Game {
     ImageLayer layer2;
     ImageLayer layer3;
     ImageLayer layerTrap;
+    ImageLayer layerBodo;
+    CanvasImage textBodo;
     ImageLayer unicorn;
     GroupLayer group;
     GroupLayer unicornGroup;
@@ -34,6 +36,7 @@ public class FieldBattle implements Game {
     int txtIdx = 0;
     boolean tmpEventQuestion = false;
     boolean tmpEventTrap = false;
+    boolean tmpEventBodo = false;
 
     // Layer comixBubble;
     @Override
@@ -85,6 +88,13 @@ public class FieldBattle implements Game {
         layer3.setTranslation(50, 20);
         layer3.setVisible(false);
         textCanvas = graphics().createImage(500, 500);
+
+        Image bodoImage = assets().getImage("images/popupBODO.png");
+        layerBodo = graphics().createImageLayer(bodoImage);
+        group.add(layerBodo);
+        layerBodo.setTranslation(50, 20);
+        layerBodo.setVisible(false);
+        textBodo = graphics().createImage(500, 500);
 
 
         Image trapImage = assets().getImage("images/popupTRAP.png");
@@ -166,6 +176,12 @@ public class FieldBattle implements Game {
                 layerTrap.setVisible(true);
                 tmpEventTrap = true;
                 board.eventOccurred = false;
+            } else if(board.currentEventType == Content.Name.BODO) {
+                layerBodo.setVisible(true);
+                displayText(this.texts[this.txtIdx]);
+                txtIdx++;
+                tmpEventBodo = true;
+                board.eventOccurred = false;
             }
         }
 
@@ -241,6 +257,12 @@ public class FieldBattle implements Game {
                         }
                         board.handeTrap();
                     }
+                    if(tmpEventBodo) {
+                        if(layerBodo.visible()) {
+                            layerBodo.setVisible(false);
+                        }
+                    }
+
                 }
 
             }

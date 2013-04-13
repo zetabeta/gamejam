@@ -21,6 +21,7 @@ public class FieldBattle implements Game {
 
     Board board = new Board();
     Content content = new Content();
+    AudioHelper audio;
     ImageLayer tilesLayer;
     ImageLayer questionLayer;
     ImageLayer layerTrap;
@@ -137,6 +138,11 @@ public class FieldBattle implements Game {
         fightLayer.setVisible(false);
 
         initKeyboardListener();
+
+        // Sound test = PlayN.assets().getSound("sounds/mpthreetest");
+        // test.setLooping(true);
+        // test.prepare();
+        // test.play();
     }
 
     private void displayText(String text, int translationx, int translationy) {

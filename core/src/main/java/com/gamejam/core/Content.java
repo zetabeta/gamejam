@@ -2,7 +2,6 @@ package com.gamejam.core;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import playn.core.Image;
 
 public class Content {
@@ -12,13 +11,13 @@ public class Content {
 
     public Content() {
         this.imgs = new HashMap<Content.Name, String>();
-        this.imgs.put(Name.BODO, "images/bodo.png");
-        this.imgs.put(Name.TRAP, "images/trap.png");
-        this.imgs.put(Name.EMPTY, "images/buttonlight.png");
-        this.imgs.put(Name.CLOSED, "images/locked.png");
-        this.imgs.put(Name.FRAGE, "images/question.png");
-        this.imgs.put(Name.TREASURE, "images/ninjas.png");
-        this.imgs.put(Name.PLAYER, "images/ninjas.png");
+        this.imgs.put(Name.BODO, "images/felderBODO.png");
+        this.imgs.put(Name.TRAP, "images/felderTRAP.png");
+        this.imgs.put(Name.EMPTY, "images/felderEMPTY.png");
+        this.imgs.put(Name.CLOSED, "images/felderLOCKED.png");
+        this.imgs.put(Name.FRAGE, "images/felderQUESTION.png");
+        this.imgs.put(Name.TREASURE, "images/felderBRAIN.png");
+        this.imgs.put(Name.PLAYER, "images/feldHERO.png");
 
     }
 
@@ -27,7 +26,7 @@ public class Content {
     }
 
     public enum Name {
+
         BODO, TRAP, EMPTY, CLOSED, FRAGE, TREASURE, PLAYER;
     }
-
 }

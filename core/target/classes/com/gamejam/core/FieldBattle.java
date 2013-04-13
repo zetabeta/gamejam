@@ -44,13 +44,6 @@ public class FieldBattle implements Game {
                 int translationI = i * 100;
                 int translationJ = j * 100;
 
-                if (i == board.getCurrentCurserX() && j == board.getCurrentCurserY()) {
-                    Image focused = assets().getImage("images/fogofwarfeldungeklickt.png");
-                    focusBackgroundLayer = graphics().createImageLayer(focused);
-                    graphics().rootLayer().add(focusBackgroundLayer);
-                    focusBackgroundLayer.setTranslation(translationI, translationJ);
-                }
-
                 Image image;
                 if (tiles[i][j].isVisible()) {
                     String img = content.getImage(tiles[i][j].getContent());
@@ -62,6 +55,13 @@ public class FieldBattle implements Game {
                 layer2 = graphics().createImageLayer(image);
                 graphics().rootLayer().add(layer2);
                 layer2.setTranslation(translationI, translationJ);
+
+                if (i == board.getCurrentCurserX() && j == board.getCurrentCurserY()) {
+                    Image focused = assets().getImage("images/felderCHAR.png");
+                    focusBackgroundLayer = graphics().createImageLayer(focused);
+                    graphics().rootLayer().add(focusBackgroundLayer);
+                    focusBackgroundLayer.setTranslation(translationI, translationJ);
+                }
             }
         }
 

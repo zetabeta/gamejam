@@ -48,6 +48,9 @@ public class Board {
 
     public void updateCurser(int x, int y) {
         tiles[currentCurserX][currentCurserY].setCurrent(false);
+        if (currentCurserX == 0 && currentCurserY == 0) {
+            tiles[currentCurserX][currentCurserY].setContent(Content.Name.EMPTY);
+        }
         currentCurserX = x;
         currentCurserY = y;
         tiles[currentCurserX][currentCurserY].setCurrent(true);
@@ -59,9 +62,9 @@ public class Board {
     }
 
     Content.Name[] contents = new Content.Name[] { Content.Name.BODO, Content.Name.EMPTY, Content.Name.CLOSED, Content.Name.EMPTY,
-            Content.Name.FRAGE, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.BODO, Content.Name.EMPTY,
-            Content.Name.EMPTY, Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.BODO,
-            Content.Name.EMPTY, Content.Name.BODO, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.BODO, Content.Name.EMPTY,
+            Content.Name.FRAGE, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.BODO, Content.Name.TRAP,
+            Content.Name.FRAGE, Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY, Content.Name.EMPTY, Content.Name.BODO,
+            Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY, Content.Name.TRAP, Content.Name.BODO, Content.Name.EMPTY,
             Content.Name.EMPTY, Content.Name.BODO, Content.Name.CLOSED };
 
     public Tile[][] getTiles() {

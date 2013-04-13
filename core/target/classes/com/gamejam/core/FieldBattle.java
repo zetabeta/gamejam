@@ -20,8 +20,10 @@ public class FieldBattle implements Game {
     ImageLayer layer2;
     ImageLayer layer3;
     GroupLayer group;
-    private int offset = 80;
+    int offset = 80;
     GroupLayer subgroup;
+
+    // Layer comixBubble;
 
     @Override
     public void init() {
@@ -66,11 +68,15 @@ public class FieldBattle implements Game {
             }
         }
         // /
-        Image image = assets().getImage("images/comixbuble.png");
+        Image image = assets().getImage("images/pinguin.png");
         layer3 = graphics().createImageLayer(image);
         group.add(layer3);
-        layer3.setTranslation(100, 100);
+        layer3.setTranslation(50, 20);
         layer3.setVisible(false);
+        // comixBubble = createMessageText("hhohohohoho!!!", 24, 122);
+        // group.add(comixBubble);
+        // comixBubble.setVisible(false);
+
         initKeyboardListener();
     }
 
@@ -118,8 +124,8 @@ public class FieldBattle implements Game {
 
         if (board.eventOccurred) {
             layer3.setVisible(true);
-            layer3.setAlpha(0.8f);
-            layer3.setDepth(100);
+            // layer3.setDepth(100);
+            // comixBubble.setVisible(true);
             board.eventOccurred = false;
         }
 
@@ -139,24 +145,28 @@ public class FieldBattle implements Game {
                 if (event.key() == Key.UP) {
                     if (layer3.visible()) {
                         layer3.setVisible(false);
+                        // comixBubble.setVisible(false);
                     }
                     board.moveUp();
                 }
                 if (event.key() == Key.DOWN) {
                     if (layer3.visible()) {
                         layer3.setVisible(false);
+                        // comixBubble.setVisible(false);
                     }
                     board.moveDown();
                 }
                 if (event.key() == Key.RIGHT) {
                     if (layer3.visible()) {
                         layer3.setVisible(false);
+                        // comixBubble.setVisible(false);
                     }
                     board.moveRight();
                 }
                 if (event.key() == Key.LEFT) {
                     if (layer3.visible()) {
                         layer3.setVisible(false);
+                        // comixBubble.setVisible(false);
                     }
                     board.moveLeft();
                 }

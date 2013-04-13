@@ -12,6 +12,8 @@ public class Board {
     private int currentCurserX;
     private int currentCurserY;
 
+    public boolean eventOccurred = false;
+
     public Board() {
         ArrayList<Content.Name> contentList = new ArrayList<Content.Name>(Arrays.asList(contents));
         Collections.shuffle(contentList);
@@ -46,7 +48,7 @@ public class Board {
         return currentCurserY;
     }
 
-    public void updateCurser(int x, int y) {
+    public void updateCursor(int x, int y) {
         tiles[currentCurserX][currentCurserY].setCurrent(false);
         if (currentCurserX == 0 && currentCurserY == 0) {
             tiles[currentCurserX][currentCurserY].setContent(Content.Name.EMPTY);
@@ -75,7 +77,8 @@ public class Board {
         int newX = getCurrentCurserX();
         int newY = getCurrentCurserY() - 1;
         if (newX >= 0 && newY >= 0 && newX < xSize && newY < xSize) {
-            updateCurser(newX, newY);
+            updateCursor(newX, newY);
+            processEvent();
         }
     }
 
@@ -83,7 +86,8 @@ public class Board {
         int newX = getCurrentCurserX();
         int newY = getCurrentCurserY() + 1;
         if (newX >= 0 && newY >= 0 && newX < xSize && newY < xSize) {
-            updateCurser(newX, newY);
+            updateCursor(newX, newY);
+            processEvent();
         }
 
     }
@@ -92,7 +96,8 @@ public class Board {
         int newX = getCurrentCurserX() + 1;
         int newY = getCurrentCurserY();
         if (newX >= 0 && newY >= 0 && newX < xSize && newY < xSize) {
-            updateCurser(newX, newY);
+            updateCursor(newX, newY);
+            processEvent();
         }
     }
 
@@ -100,7 +105,14 @@ public class Board {
         int newX = getCurrentCurserX() - 1;
         int newY = getCurrentCurserY();
         if (newX >= 0 && newY >= 0 && newX < xSize && newY < xSize) {
-            updateCurser(newX, newY);
+            updateCursor(newX, newY);
+            processEvent();
+        }
+    }
+
+    private void processEvent() {
+        if (!tiles[currentCurserX][currentCurserY].getContent().equals(Content.Name.EMPTY)) {
+            eventOccurred = true;
         }
     }
 }

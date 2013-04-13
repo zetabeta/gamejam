@@ -17,6 +17,7 @@ public class Tile {
     }
 
     public void setBlocked(boolean isBlocked) {
+        setHasChanged(true);
         this.isBlocked = isBlocked;
     }
 

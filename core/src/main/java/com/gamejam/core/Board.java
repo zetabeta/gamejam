@@ -24,11 +24,11 @@ public class Board {
                 if (i == 0 && j == 0) {
                     tile.setContent(Content.Name.PLAYER);
                     tile.setVisible(true);
-                } else if (i == 4 && j == 4) {
+                } else if (i == xSize - 1 && j == ySize - 1) {
                     tile.setContent(Content.Name.TREASURE);
                     tile.setVisible(true);
                 } else {
-                    tile.setContent(contentList.get(i + 5 * j));
+                    tile.setContent(contentList.get(i + ySize * j));
                     tile.setVisible(false);
                 }
 
@@ -180,9 +180,14 @@ public class Board {
 
         if (!rightClear && !leftClear && !downClear && !upClear) {
             return true;
-        } else {
-            return false;
         }
+
+        if (checkDiagonals()) {
+            return true;
+        }
+
+        return false;
+
     }
 
     private boolean checkClear(int x, int y) {
@@ -196,4 +201,17 @@ public class Board {
             return false;
         }
     }
+
+    private boolean checkDiagonals() {
+        if (tiles[xSize - 2][ySize - 1].isBlocked() && tiles[xSize - 1][ySize - 2].isBlocked()) {
+            return true;
+        }
+
+        if (tiles[xSize - 3][ySize - 1].isBlocked() && tiles[xSize - 1][ySize - 2].isBlocked() && tiles[xSize - 2][ySize - 2].isBlocked()) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

@@ -44,14 +44,12 @@ public class FieldBattle implements Game {
     String[] texts = new String[] { "Welcher Sinn hat keinen Sinn?\n[Y] Unsinn\n[N] Der Sinn des Lebens",
             "Welcher Planet wird Abendstern \ngenannt?\n[Y] Venus\n[N] Mars",
             "Was verbraucht mehr Strom?\n[Y] Das kleine Licht in meinem " + "Kühlschrank!\n[N] Dein Hirn.",
-            "Wer muss manchmal beim Orgasmus \nniesen, weil der Hirnstamm \n„durcheinander“ ist?\n[Y] Männer…\n[N] Frauen!",
             "Welche/r Leiter nützt der \nFeuerwehr nicht?\n[Y] Tonleiter \n[N] Wehrleiter",
             "Wer war der Erfinder der Glühbirne?\n[Y] Unbekannt\n[N] Thomas Alva Edison",
             "Was steht mitten in Paris?\n[Y] Das „r“\n[N] Der Eiffelturm!" };
     String[] bodosTexte = new String[] {
             "Gnak, gnak, gnak \nSchau mal hinter dich, \nein dreikoepfiger Affe!",
             "Wusstest du, dass das kleine \nLicht im Kuehlschrank mehr Strom \nverbraucht, als unser Gehirn?",
-            "Im Hirnstamm ist manchmal so \nviel los, dass Maenner beim Orgasmus \nniesen muessen… \ndas kann dir ja nun nicht passieren..",
             "Unser Gehirn verbraucht nur 12 Watt, \nalso pro Tag die Energie zweier großer \nBananen. Wie habt ihr das denn damals \nim Osten gemacht?",
             "Im Uebringen: Die Insel, die du dir am \nAnfang erschaffen hast, heißt \n„N‘Ropinu“ und ist weit über die Grenzen \ndeines matschigen Gehirns "
                     + "bekannt… \ndenk mal drueber nach!",

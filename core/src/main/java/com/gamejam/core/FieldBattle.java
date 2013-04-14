@@ -28,7 +28,7 @@ public class FieldBattle implements Game {
     ImageLayer layerTrap;
     ImageLayer layerBodo;
     ImageLayer layerWin;
-    ImageLayer layerLose;
+    ImageLayer gameoverLayer;
     ImageLayer fightLayer;
     CanvasImage textBodo;
     ImageLayer unicorn;
@@ -148,11 +148,11 @@ public class FieldBattle implements Game {
         layerWin.setTranslation(50, 20);
         layerWin.setVisible(false);
 
-        Image loseImage = assets().getImage("images/gameover.png");
-        layerLose = graphics().createImageLayer(loseImage);
-        outcomeGroup.add(layerLose);
-        layerLose.setTranslation(50, 20);
-        layerLose.setVisible(false);
+        Image gameover = assets().getImage("images/gameover.png");
+        gameoverLayer = graphics().createImageLayer(gameover);
+        outcomeGroup.add(gameoverLayer);
+        gameoverLayer.setTranslation(50, 20);
+        gameoverLayer.setVisible(false);
 
         initKeyboardListener();
 
@@ -183,6 +183,9 @@ public class FieldBattle implements Game {
 
     @Override
     public void update(float delta) {
+        if (board.isGameOver()) {
+            gameoverLayer.setVisible(true);
+        }
 
         Tile[][] tiles = board.getTiles();
         for (int i = 0; i < tiles.length; i++) {
